@@ -2,12 +2,21 @@
 
 All dates are inclusive start / exclusive end (Earth Engine convention) unless noted.
 """
+import os
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-DATA = ROOT / "data"
+# Study reach. "kurigram" (default) = the primary reach used to develop the method. Any other reach (set the
+# environment variable SAGE_REACH, e.g. "sirajganj") gets its own data/ and outputs/ trees so that an
+# independent evaluation never mixes with — or overwrites — the development reach.
+REACH = os.environ.get("SAGE_REACH", "kurigram")
+if REACH == "kurigram":
+    DATA = ROOT / "data"
+    OUT = ROOT / "outputs"
+else:
+    DATA = ROOT / "data" / "reaches" / REACH
+    OUT = ROOT / "outputs" / "reaches" / REACH
 CACHE = DATA / "cache"
-OUT = ROOT / "outputs"
 TABLES = OUT / "tables"
 FIGS = OUT / "figures"
 MAPS = OUT / "maps"

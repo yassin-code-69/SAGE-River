@@ -1,0 +1,15 @@
+0b8ffb37c8d7a5d94f2f269b3d7d1fca *docs/sage_river_v2_design.md
+Wed Nov 11 02:58:23 BST 2026
+--- v2 CODE FREEZE (before any Sirajganj v2 run / before reading Sirajganj 2025 results)
+10116e556c349ae19671362f7c3bdd2e *python/sage_v2.py
+bfcb3d52d0c50a09751891d685045f9b *python/sage_methods.py
+5083ba0c8fed82e82d5a3a9926aecbc3 *python/experiment_runner.py
+dbf64ed3d30c01e0fb8b42707de007ba *python/metrics.py
+c996572b0bb8ce41fa8d1866ac7e7a1f *python/reference_validation.py
+Wed Nov 11 03:12:45 BST 2026
+--- addendum appended (transfer evaluation), before Sirajganj SAR results
+6cda6a2c342a634ceb8a2e69aa9c32a4 *docs/sage_river_v2_design.md
+Wed Nov 11 03:30:51 BST 2026
+--- transfer_eval.py written (before Sirajganj SAR results)
+9fc6d0aafb18d5a80d3e6f3cc5eaecfb *python/transfer_eval.py
+Wed Nov 11 03:31:18 BST 2026

@@ -1,0 +1,10 @@
+# Pre-registered SAGE-River v2 files are verified byte-for-byte against docs/sage_river_v2_design.md5
+# (python/final_audit.py). Store and check them out exactly as frozen: no line-ending conversion.
+docs/sage_river_v2_design.md -text
+docs/sage_river_v2_design.md5 -text
+python/sage_v2.py -text
+python/sage_methods.py -text
+python/experiment_runner.py -text
+python/metrics.py -text
+python/reference_validation.py -text
+python/transfer_eval.py -text
