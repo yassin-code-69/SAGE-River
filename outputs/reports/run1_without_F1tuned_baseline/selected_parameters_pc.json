@@ -1,0 +1,50 @@
+{
+ "source": "pc",
+ "filter": "circle7",
+ "thresholds": {
+  "T_pre": -10.5,
+  "T_post": {
+   "1": -10.65,
+   "2": -10.55,
+   "3": -10.45,
+   "6": -10.4
+  },
+  "T_scene": -10.65
+ },
+ "published": {
+  "T_pre": -13.2,
+  "T_post": -12.7
+ },
+ "params_by_k": {
+  "1": {
+   "delta_G": 0.5,
+   "m_AG": null,
+   "m_rule": null,
+   "delta_AG": 0.0,
+   "calibrated_on_k": 1
+  },
+  "2": {
+   "delta_G": 0.5,
+   "m_AG": 2,
+   "m_rule": "majority",
+   "delta_AG": 1.0,
+   "calibrated_on_k": 2
+  },
+  "3": {
+   "delta_G": 0.5,
+   "m_AG": 3,
+   "m_rule": "unanimous",
+   "delta_AG": 1.5,
+   "calibrated_on_k": 3
+  },
+  "6": {
+   "delta_G": 0.5,
+   "m_AG": 4,
+   "m_rule": "majority",
+   "delta_AG": 1.0,
+   "calibrated_on_k": 6
+  }
+ },
+ "selection_rule": "max mean F1 (decided px) s.t. mean coverage >= 0.9 on 2024",
+ "frozen_at": "2026-11-11T01:56:58"
+}

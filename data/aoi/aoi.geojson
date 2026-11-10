@@ -1,0 +1,51 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "Jamuna (Brahmaputra) reach upstream of Chilmari, Kurigram district (12 km)",
+    "crs_analysis": "EPSG:32645",
+    "bounds_utm": [
+     764000.0,
+     2836000.0,
+     790000.0,
+     2848000.0
+    ],
+    "width_km": 26.0,
+    "height_km": 12.0,
+    "rationale": "Chosen after Sentinel-2 Feb-Mar 2025 vs Feb-Mar 2026 reconnaissance of Kurigram and Sirajganj boxes: clear channel-connected vegetation-to-sand/water loss on the east (left) outer bank at ~25.63-25.70N (about 60 ha in 30 m recon), no tributary confluence inside the AOI, both outer banks inside the AOI, R114/R150 Sentinel-1 coverage. Sirajganj alternative (Kazipur) showed mainly protected west bank with little outer-bank loss; Kurigram south window lies next to the Teesta confluence. Selection did not use the SAR data or the 2025 SAR results.",
+    "recon_box": "kurigram",
+    "centre_lon": 89.75951,
+    "centre_lat": 25.66973
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       89.628923,
+       25.617993
+      ],
+      [
+       89.887583,
+       25.613108
+      ],
+      [
+       89.890193,
+       25.721333
+      ],
+      [
+       89.631301,
+       25.726242
+      ],
+      [
+       89.628923,
+       25.617993
+      ]
+     ]
+    ]
+   }
+  }
+ ]
+}

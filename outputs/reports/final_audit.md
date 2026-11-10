@@ -1,0 +1,47 @@
+# Final audit
+run: 2026-11-11T02:13:31  source: pc
+
+- PASS — exists: outputs/tables/sentinel1_scene_inventory.csv
+- PASS — exists: outputs/tables/sentinel1_acquisitions.csv
+- PASS — exists: outputs/figures/figure_A_scene_availability.png
+- PASS — exists: outputs/figures/figure_0_study_area.png
+- PASS — exists: outputs/tables/experiment_A_all_subsets_pc.csv
+- PASS — exists: outputs/tables/experiment_A_summary_pc.csv
+- PASS — exists: outputs/tables/experiment_B_chronological_pc.csv
+- PASS — exists: outputs/tables/selected_parameters_pc.json
+- PASS — exists: outputs/tables/calibration_thresholds_2024_pc.csv
+- PASS — exists: outputs/figures/figure_B_maps.png
+- PASS — exists: outputs/figures/figure_C_performance.png
+- PASS — exists: outputs/figures/figure_D_errors.png
+- PASS — exists: data/aoi/aoi.geojson
+- PASS — exists: data/reference/s2_reference_2024.npz
+- PASS — exists: data/reference/s2_reference_2025.npz
+- PASS — exists: poster/poster_editable.pptx
+- PASS — exists: poster/poster_final.pdf
+- PASS — exists: poster/poster_content_en.md
+- PASS — exists: poster/references.bib
+- PASS — exists: presentation/pitch_english.md
+- PASS — exists: presentation/pitch_bangla.md
+- PASS — exists: presentation/judges_qa.md
+- PASS — exists: presentation/team_roles.md
+- PASS — exists: README.md
+- PASS — exists: docs/final_bangla_report.md
+- PASS — 2025 BASE_calibrated has C(8,1)=8 subsets (found 8)
+- PASS — 2025 BASE_calibrated has C(8,2)=28 subsets (found 28)
+- PASS — 2025 BASE_calibrated has C(8,3)=56 subsets (found 56)
+- PASS — 2025 BASE_calibrated has C(8,6)=28 subsets (found 28)
+- PASS — 2025 BASE_calibrated has C(8,8)=1 subsets (found 1)
+- PASS — precision within [0,1]
+- PASS — recall within [0,1]
+- PASS — f1 within [0,1]
+- PASS — iou within [0,1]
+- PASS — coverage within [0,1]
+- PASS — confusion counts + abstentions sum to evaluated pixels
+- PASS — parameters frozen before experiment finished (2025 evaluated after freeze in same run)
+- PASS — calibration table exists and is 2024-only by construction (calibrate() is only called on 2024)
+- PASS — recomputed BASE_calibrated k=6 subset 0-1-2-3-5-7
+- PASS — recomputed BASE_calibrated k=3 subset 0-5-6
+- PASS — recomputed BASE_calibrated k=3 subset 1-2-5
+- PASS — recomputed BASE_calibrated k=6 subset 1-3-4-5-6-7
+- PASS — recomputed BASE_calibrated k=3 subset 2-4-6
+- PASS — poster text free of un-negated forbidden claims (hits: [])

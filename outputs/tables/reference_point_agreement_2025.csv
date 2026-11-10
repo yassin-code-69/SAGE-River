@@ -1,0 +1,4 @@
+year,stratum,n_points,n_visual_decided,visual_eroded,visual_not_eroded,visual_cannot_tell,agreement_with_auto_label
+2025,ref_erosion,50,39,36,3,11,0.9230769230769231
+2025,ref_nonerosion_near_bank,50,47,0,47,3,1.0
+2025,ref_uncertain,20,20,0,20,0,

@@ -1,0 +1,294 @@
+// This code is part of the paper
+// Freihardt & Frey (2022): Assessing riverbank erosion in Bangladesh using time series of Sentinel-1 radar imagery in the Google Earth Engine //
+
+
+//////AUXILIARY FUNCTIONS///////////
+
+
+//Function to convert from dB
+function toNatural(img) {
+return ee.Image(10.0).pow(img.select(0).divide(10.0));
+}
+
+//Function to convert to dB
+function toDB(img) {
+return ee.Image(img).log10().multiply(10.0);
+}
+
+var boxcar7by7 = ee.Kernel.circle({
+  radius: 7,
+  units: 'pixels',
+  normalize: true
+});
+
+var meanFilter7by7 = function(image){
+  image = toNatural(image);
+  image = image.convolve(boxcar7by7);
+  return toDB(image);
+};
+
+//////////////MAIN PART//////////////////////
+
+//Create region of interest
+var ROI = ee.Geometry.Polygon(
+        [[[89.50300063476497,24.725161138276004],
+          [89.85387648925716,24.725161138276004],
+          [89.85387648925716,25.46265098278777],
+          [89.50300063476497,25.46265098278777]]]);
+
+// Load Sentinel-1 C-band SAR Ground Range collection
+var S1 = ee.ImageCollection('COPERNICUS/S1_GRD')
+        .filterBounds(ROI)
+        .filter(ee.Filter.eq('instrumentMode', 'IW'))
+        .filterMetadata('resolution_meters', 'equals', 10)
+        ;
+
+// Create functions that mask out the Sentinel-1 images beyond 30 to 45 degrees.
+var maskGTAng30 = function(image){
+  var angle = image.select(['angle'])
+  var maskedAngle = angle.gt(30)
+  return image.updateMask(maskedAngle);
+};
+var S1 = S1.map(maskGTAng30);
+
+var maskLTAng45 = function(image){
+  var angle = image.select(['angle'])
+  var maskedAngle = angle.lt(45)
+  return image.updateMask(maskedAngle);
+};
+var S1 = S1.map(maskLTAng45);
+
+// Create image collections for different polarizations
+//var imgVV_VH = S1.filterMetadata('transmitterReceiverPolarisation', 'equals', ['VV', 'VH']);
+var imgVV = S1.select('VV');
+//var imgVH = imgVV_VH.select('VH');
+
+// Filter by pass type
+//var imgVV_VH_ASC = imgVV_VH.filter(ee.Filter.eq('orbitProperties_pass', 'ASCENDING'));
+var imgVV_ASC = imgVV.filter(ee.Filter.eq('orbitProperties_pass', 'ASCENDING'));
+//var imgVH_ASC = imgVH.filter(ee.Filter.eq('orbitProperties_pass', 'ASCENDING'));
+
+//var imgVV_VH_DESC = imgVV_VH.filter(ee.Filter.eq('orbitProperties_pass', 'DESCENDING'));
+var imgVV_DESC = imgVV.filter(ee.Filter.eq('orbitProperties_pass', 'DESCENDING'));
+//var imgVH_DESC = imgVH.filter(ee.Filter.eq('orbitProperties_pass', 'DESCENDING'));
+
+//Load Sentinel-2 images for validation of classification and erosion detection (code from https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_S2)
+
+/**
+ * Function to mask clouds using the Sentinel-2 QA band
+ * @param {ee.Image} image Sentinel-2 image
+ * @return {ee.Image} cloud masked Sentinel-2 image
+ */
+function maskS2clouds(image) {
+  var qa = image.select('QA60');
+
+  // Bits 10 and 11 are clouds and cirrus, respectively.
+  var cloudBitMask = 1 << 10;
+  var cirrusBitMask = 1 << 11;
+
+  // Both flags should be set to zero, indicating clear conditions.
+  var mask = qa.bitwiseAnd(cloudBitMask).eq(0)
+      .and(qa.bitwiseAnd(cirrusBitMask).eq(0));
+
+  return image.updateMask(mask).divide(10000);
+}
+
+// Map the function over one month of data and take the median.
+// Load Sentinel-2 TOA reflectance data.
+var S2_0118 = ee.ImageCollection('COPERNICUS/S2')
+                  .filterDate('2018-01-01', '2018-02-01')
+                  // Pre-filter to get less cloudy granules.
+                  .filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 20))
+                  .map(maskS2clouds);
+
+var S2_0119 = ee.ImageCollection('COPERNICUS/S2')
+                  .filterDate('2019-01-01', '2019-02-01')
+                  // Pre-filter to get less cloudy granules.
+                  .filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 20))
+                  .map(maskS2clouds);
+
+var S2_1119 = ee.ImageCollection('COPERNICUS/S2')
+                  .filterDate('2019-11-01', '2019-12-01')
+                  // Pre-filter to get less cloudy granules.
+                  .filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 20))
+                  .map(maskS2clouds);
+
+var S2_0120 = ee.ImageCollection('COPERNICUS/S2')
+                  .filterDate('2020-01-01', '2020-02-01')
+                  // Pre-filter to get less cloudy granules.
+                  .filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 20))
+                  .map(maskS2clouds);
+
+//define visualization parameters
+var rgbVis = {
+  min: 0.0,
+  max: 0.3,
+  bands: ['B4', 'B3', 'B2'],
+};
+
+////////////////////
+///// 1. Settlement detection
+////////////////////
+
+//define thresholds for persistent scatterers (0.25 taken from Ferretti et al (2001); -2 and 0.65 from van Leijen (2014))
+var THRESHOLD_PS_COV = 0.4;
+var THRESHOLD_PS_SIGMA = -4;
+
+//define dry season durations (November-May)
+var duration_sett2014_15 = ee.Filter.date('2014-11-01', '2015-05-01');
+var duration_sett2015_16 = ee.Filter.date('2015-11-01', '2016-05-01');
+var duration_sett2016_17 = ee.Filter.date('2016-11-01', '2017-05-01');
+var duration_sett2017_18 = ee.Filter.date('2017-11-01', '2018-05-01');
+var duration_sett2018_19 = ee.Filter.date('2018-11-01', '2019-05-01');
+var duration_sett2019_20 = ee.Filter.date('2019-11-01', '2020-05-01');
+
+//calculate pixel-wise covariance of amplitude values over whole dry season, both for ASC and DESC
+var dry2014_15_ASC = imgVV_ASC.filter(duration_sett2014_15).map(toNatural);
+var dry2015_16_ASC = imgVV_ASC.filter(duration_sett2015_16).map(toNatural);
+var dry2016_17_ASC = imgVV_ASC.filter(duration_sett2016_17).map(toNatural);
+var dry2017_18_ASC = imgVV_ASC.filter(duration_sett2017_18).map(toNatural);
+var dry2018_19_ASC = imgVV_ASC.filter(duration_sett2018_19).map(toNatural);
+var dry2019_20_ASC = imgVV_ASC.filter(duration_sett2019_20).map(toNatural);
+
+var CoV_dry2014_15_ASC = dry2014_15_ASC.reduce(ee.Reducer.stdDev()).divide(dry2014_15_ASC.mean());
+var CoV_dry2015_16_ASC = dry2015_16_ASC.reduce(ee.Reducer.stdDev()).divide(dry2015_16_ASC.mean());
+var CoV_dry2016_17_ASC = dry2016_17_ASC.reduce(ee.Reducer.stdDev()).divide(dry2016_17_ASC.mean());
+var CoV_dry2017_18_ASC = dry2017_18_ASC.reduce(ee.Reducer.stdDev()).divide(dry2017_18_ASC.mean());
+var CoV_dry2018_19_ASC = dry2018_19_ASC.reduce(ee.Reducer.stdDev()).divide(dry2018_19_ASC.mean());
+var CoV_dry2019_20_ASC = dry2019_20_ASC.reduce(ee.Reducer.stdDev()).divide(dry2019_20_ASC.mean());
+
+var dry2014_15_DESC = imgVV_DESC.filter(duration_sett2014_15).map(toNatural);
+var dry2015_16_DESC = imgVV_DESC.filter(duration_sett2015_16).map(toNatural);
+var dry2016_17_DESC = imgVV_DESC.filter(duration_sett2016_17).map(toNatural);
+var dry2017_18_DESC = imgVV_DESC.filter(duration_sett2017_18).map(toNatural);
+var dry2018_19_DESC = imgVV_DESC.filter(duration_sett2018_19).map(toNatural);
+var dry2019_20_DESC = imgVV_DESC.filter(duration_sett2019_20).map(toNatural);
+
+var CoV_dry2014_15_DESC = dry2014_15_DESC.reduce(ee.Reducer.stdDev()).divide(dry2014_15_DESC.mean());
+var CoV_dry2015_16_DESC = dry2015_16_DESC.reduce(ee.Reducer.stdDev()).divide(dry2015_16_DESC.mean());
+var CoV_dry2016_17_DESC = dry2016_17_DESC.reduce(ee.Reducer.stdDev()).divide(dry2016_17_DESC.mean());
+var CoV_dry2017_18_DESC = dry2017_18_DESC.reduce(ee.Reducer.stdDev()).divide(dry2017_18_DESC.mean());
+var CoV_dry2018_19_DESC = dry2018_19_DESC.reduce(ee.Reducer.stdDev()).divide(dry2018_19_DESC.mean());
+var CoV_dry2019_20_DESC = dry2019_20_DESC.reduce(ee.Reducer.stdDev()).divide(dry2019_20_DESC.mean());
+
+//select PS candidates: smaller than CoV threshold AND mean larger than sigma_0 threshold
+var PS_dry2014_15_ASC = CoV_dry2014_15_ASC.lt(THRESHOLD_PS_COV).and(imgVV_ASC.filter(duration_sett2014_15).mean().gt(THRESHOLD_PS_SIGMA));
+var PS_dry2015_16_ASC = CoV_dry2015_16_ASC.lt(THRESHOLD_PS_COV).and(imgVV_ASC.filter(duration_sett2015_16).mean().gt(THRESHOLD_PS_SIGMA));
+var PS_dry2016_17_ASC = CoV_dry2016_17_ASC.lt(THRESHOLD_PS_COV).and(imgVV_ASC.filter(duration_sett2016_17).mean().gt(THRESHOLD_PS_SIGMA));
+var PS_dry2017_18_ASC = CoV_dry2017_18_ASC.lt(THRESHOLD_PS_COV).and(imgVV_ASC.filter(duration_sett2017_18).mean().gt(THRESHOLD_PS_SIGMA));
+var PS_dry2018_19_ASC = CoV_dry2018_19_ASC.lt(THRESHOLD_PS_COV).and(imgVV_ASC.filter(duration_sett2018_19).mean().gt(THRESHOLD_PS_SIGMA));
+var PS_dry2019_20_ASC = CoV_dry2019_20_ASC.lt(THRESHOLD_PS_COV).and(imgVV_ASC.filter(duration_sett2019_20).mean().gt(THRESHOLD_PS_SIGMA));
+
+var PS_dry2014_15_DESC = CoV_dry2014_15_DESC.lt(THRESHOLD_PS_COV).and(imgVV_DESC.filter(duration_sett2014_15).mean().gt(THRESHOLD_PS_SIGMA));
+var PS_dry2015_16_DESC = CoV_dry2015_16_DESC.lt(THRESHOLD_PS_COV).and(imgVV_DESC.filter(duration_sett2015_16).mean().gt(THRESHOLD_PS_SIGMA));
+var PS_dry2016_17_DESC = CoV_dry2016_17_DESC.lt(THRESHOLD_PS_COV).and(imgVV_DESC.filter(duration_sett2016_17).mean().gt(THRESHOLD_PS_SIGMA));
+var PS_dry2017_18_DESC = CoV_dry2017_18_DESC.lt(THRESHOLD_PS_COV).and(imgVV_DESC.filter(duration_sett2017_18).mean().gt(THRESHOLD_PS_SIGMA));
+var PS_dry2018_19_DESC = CoV_dry2018_19_DESC.lt(THRESHOLD_PS_COV).and(imgVV_DESC.filter(duration_sett2018_19).mean().gt(THRESHOLD_PS_SIGMA));
+var PS_dry2019_20_DESC = CoV_dry2019_20_DESC.lt(THRESHOLD_PS_COV).and(imgVV_DESC.filter(duration_sett2019_20).mean().gt(THRESHOLD_PS_SIGMA));
+
+//combine ASC and DESC
+var PS_dry2014_15 = PS_dry2014_15_ASC.or(PS_dry2014_15_DESC);
+var PS_dry2015_16 = PS_dry2015_16_ASC.or(PS_dry2015_16_DESC);
+var PS_dry2016_17 = PS_dry2016_17_ASC.or(PS_dry2016_17_DESC);
+var PS_dry2017_18 = PS_dry2017_18_ASC.or(PS_dry2017_18_DESC);
+var PS_dry2018_19 = PS_dry2018_19_ASC.or(PS_dry2018_19_DESC);
+var PS_dry2019_20 = PS_dry2019_20_ASC.or(PS_dry2019_20_DESC);
+
+var PS_dry2014_15_masked = PS_dry2014_15.mask(PS_dry2014_15.eq(1));
+var PS_dry2015_16_masked = PS_dry2015_16.mask(PS_dry2015_16.eq(1));
+var PS_dry2016_17_masked = PS_dry2016_17.mask(PS_dry2016_17.eq(1));
+var PS_dry2017_18_masked = PS_dry2017_18.mask(PS_dry2017_18.eq(1));
+var PS_dry2018_19_masked = PS_dry2018_19.mask(PS_dry2018_19.eq(1));
+var PS_dry2019_20_masked = PS_dry2019_20.mask(PS_dry2019_20.eq(1));
+
+////////////////////
+///// 2. Erosion detection
+////////////////////
+
+/// for land cover classification: define filter, sampling duration and corresponding thresholds
+
+//for years 2014-2018: 6 months sampling duration
+var duration2014 = ee.Filter.date('2014-11-01', '2015-05-01');
+var duration2015 = ee.Filter.date('2015-11-01', '2016-05-01');
+var duration2016 = ee.Filter.date('2016-11-01', '2017-05-01');
+var duration2017 = ee.Filter.date('2017-11-01', '2018-05-01');
+var duration2018 = ee.Filter.date('2018-11-01', '2019-05-01');
+
+var THRESHOLD_SAND_6mo = -13.2;
+
+//for year 2019: 1 month sampling duration
+var duration2019 = ee.Filter.date('2019-11-01', '2019-12-01');
+
+var THRESHOLD_SAND_1mo = -12.7;
+
+//define filter: 7x7 boxcar
+var filter = meanFilter7by7;
+
+//filter for the respective images, smooth with filter and reduce to the mean of the image collection
+var image2014 = imgVV_ASC.filter(duration2014).map(filter).mean();
+var image2015 = imgVV_ASC.filter(duration2015).map(filter).mean();
+var image2016 = imgVV_ASC.filter(duration2016).map(filter).mean();
+var image2017 = imgVV_ASC.filter(duration2017).map(filter).mean();
+var image2018 = imgVV_ASC.filter(duration2018).map(filter).mean();
+var image2019 = imgVV_ASC.filter(duration2019).map(filter).mean();
+
+//detect eroded non-sand pixels (fields or trees) for each year: greater than sand-fields threshold before the monsoon, and smaller after
+var eroded_land_2015 = image2014.gt(THRESHOLD_SAND_6mo).and(image2015.lt(THRESHOLD_SAND_6mo));
+var eroded_land_2016 = image2015.gt(THRESHOLD_SAND_6mo).and(image2016.lt(THRESHOLD_SAND_6mo));
+var eroded_land_2017 = image2016.gt(THRESHOLD_SAND_6mo).and(image2017.lt(THRESHOLD_SAND_6mo));
+var eroded_land_2018 = image2017.gt(THRESHOLD_SAND_6mo).and(image2018.lt(THRESHOLD_SAND_6mo));
+var eroded_land_2019 = image2018.gt(THRESHOLD_SAND_6mo).and(image2019.lt(THRESHOLD_SAND_1mo));
+
+//mask eroded pixels
+var eroded_land_2015_masked = eroded_land_2015.mask(eroded_land_2015.eq(1));
+var eroded_land_2016_masked = eroded_land_2016.mask(eroded_land_2016.eq(1));
+var eroded_land_2017_masked = eroded_land_2017.mask(eroded_land_2017.eq(1));
+var eroded_land_2018_masked = eroded_land_2018.mask(eroded_land_2018.eq(1));
+var eroded_land_2019_masked = eroded_land_2019.mask(eroded_land_2019.eq(1));
+
+/// eroded settlements
+
+//find eroded PS
+var PS_eroded2015 = PS_dry2014_15.and(image2015.lt(THRESHOLD_SAND_6mo));
+var PS_eroded2016 = PS_dry2015_16.and(image2016.lt(THRESHOLD_SAND_6mo));
+var PS_eroded2017 = PS_dry2016_17.and(image2017.lt(THRESHOLD_SAND_6mo));
+var PS_eroded2018 = PS_dry2017_18.and(image2018.lt(THRESHOLD_SAND_6mo));
+var PS_eroded2019 = PS_dry2018_19.and(image2019.lt(THRESHOLD_SAND_1mo));
+
+//mask eroded pixels
+var PS_eroded2015_masked = PS_eroded2015.mask(PS_eroded2015.eq(1));
+var PS_eroded2016_masked = PS_eroded2016.mask(PS_eroded2016.eq(1));
+var PS_eroded2017_masked = PS_eroded2017.mask(PS_eroded2017.eq(1));
+var PS_eroded2018_masked = PS_eroded2018.mask(PS_eroded2018.eq(1));
+var PS_eroded2019_masked = PS_eroded2019.mask(PS_eroded2019.eq(1));
+
+////////////////////
+///// 3. Mapping
+////////////////////
+
+Map.centerObject(center, 14);
+
+//Map optical Sentinel-2 images for validation
+Map.addLayer(S2_0118.median(), rgbVis, 'Optical image (January 2018)', false);
+Map.addLayer(S2_0119.median(), rgbVis, 'Optical image (January 2019)', false);
+//Map.addLayer(S2_1119.median(), rgbVis, 'Optical image (November 2019)');
+Map.addLayer(S2_0120.median(), rgbVis, 'Optical image (January 2020)');
+
+//map eroded land
+Map.addLayer(eroded_land_2015_masked, {min: 0, max: 1, palette: ['944c1f'], opacity: 0.8}, 'Land eroded in 2015 monsoon (dark brown)', false);
+Map.addLayer(eroded_land_2016_masked, {min: 0, max: 1, palette: ['ab541d'], opacity: 0.8}, 'Land eroded in 2016 monsoon', false);
+Map.addLayer(eroded_land_2017_masked, {min: 0, max: 1, palette: ['c45a16'], opacity: 0.8}, 'Land eroded in 2017 monsoon', false);
+Map.addLayer(eroded_land_2018_masked, {min: 0, max: 1, palette: ['c95002'], opacity: 0.8}, 'Land eroded in 2018 monsoon', false);
+Map.addLayer(eroded_land_2019_masked, {min: 0, max: 1, palette: ['ff6200'], opacity: 0.8}, 'Land eroded in 2019 monsoon (light brown)', true);
+
+//map eroded settlements
+Map.addLayer(PS_eroded2015_masked, {min: 0, max: 1, palette: ['ff0000']}, 'Settl. eroded in 2015 monsoon (red)', false);
+Map.addLayer(PS_eroded2016_masked, {min: 0, max: 1, palette: ['ff0000']}, 'Settl. eroded in 2016 monsoon (red)', false);
+Map.addLayer(PS_eroded2017_masked, {min: 0, max: 1, palette: ['ff0000']}, 'Settl. eroded in 2017 monsoon (red)', false);
+Map.addLayer(PS_eroded2018_masked, {min: 0, max: 1, palette: ['ff0000']}, 'Settl. eroded in 2018 monsoon (red)', false);
+Map.addLayer(PS_eroded2019_masked, {min: 0, max: 1, palette: ['ff0000']}, 'Settl. eroded in 2019 monsoon (red)', true);
+
+//map settlements still standing
+//Map.addLayer(PS_dry2017_18_masked, {min: 0, max: 1, palette: ['960505']}, 'Settl. in beginning of 2018 (wine red)', false);
+//Map.addLayer(PS_dry2018_19_masked, {min: 0, max: 1, palette: ['f79d00']}, 'Settl. in beginning of 2019 (orange)', false);
+Map.addLayer(PS_dry2019_20_masked, {min: 0, max: 1, palette: ['1368ff']}, 'Settl. in beginning of 2020 (blue)', true);

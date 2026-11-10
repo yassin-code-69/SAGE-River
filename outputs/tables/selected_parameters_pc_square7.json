@@ -1,0 +1,58 @@
+{
+ "source": "pc",
+ "filter": "square7",
+ "thresholds": {
+  "T_pre": -10.65,
+  "T_post": {
+   "1": -11.05,
+   "2": -10.9,
+   "3": -10.8,
+   "6": -10.7
+  },
+  "T_scene": -11.05
+ },
+ "published": {
+  "T_pre": -13.2,
+  "T_post": -12.7
+ },
+ "params_by_k": {
+  "1": {
+   "delta_G": 0.5,
+   "m_AG": null,
+   "m_rule": null,
+   "delta_AG": 0.0,
+   "T_pre_F1tuned": -11.65,
+   "T_post_F1tuned": -13.05,
+   "calibrated_on_k": 1
+  },
+  "2": {
+   "delta_G": 0.5,
+   "m_AG": 2,
+   "m_rule": "majority",
+   "delta_AG": 1.0,
+   "T_pre_F1tuned": -11.65,
+   "T_post_F1tuned": -12.9,
+   "calibrated_on_k": 2
+  },
+  "3": {
+   "delta_G": 0.5,
+   "m_AG": 3,
+   "m_rule": "unanimous",
+   "delta_AG": 1.5,
+   "T_pre_F1tuned": -11.15,
+   "T_post_F1tuned": -12.3,
+   "calibrated_on_k": 3
+  },
+  "6": {
+   "delta_G": 0.5,
+   "m_AG": 4,
+   "m_rule": "majority",
+   "delta_AG": 1.0,
+   "T_pre_F1tuned": -11.15,
+   "T_post_F1tuned": -11.7,
+   "calibrated_on_k": 6
+  }
+ },
+ "selection_rule": "max mean F1 (decided px) s.t. mean coverage >= 0.9 on 2024",
+ "frozen_at": "2026-11-11T02:00:16"
+}

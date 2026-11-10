@@ -1,0 +1,8 @@
+.venv/
+__pycache__/
+*.pyc
+data/cache/
+# never commit credentials
+.config/
+*credentials*
+data/metadata/gee_project.json

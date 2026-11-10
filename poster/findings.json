@@ -1,0 +1,24 @@
+{
+ "_provenance": "Written by hand after inspecting outputs/tables/experiment_A_summary_pc.csv, experiment_B_chronological_pc.csv, experiment_A_all_subsets_pc.csv (2025 test, frozen 2024 parameters) and reference_point_agreement_2025.csv on 11 Nov 2026. Every number below appears in those files.",
+ "takeaway": "2–3 Sentinel-1 scenes already give stable erosion maps; agreement + abstention removes almost all false erosion and survives a bad scene — but abstains on ~12 % of the bank strip, where 23–36 % of the true erosion lies.",
+ "abstract": "Sentinel-1 radar maps riverbank erosion through clouds, but a quick post-monsoon map has few comparable scenes: over our 12-km Jamuna reach (Kurigram) only 2–3 ascending scenes each November. We reproduced the Freihardt & Frey (2023) threshold rule and scored every subset of 1–8 post-monsoon scenes (121 maps per method) for the 2025 monsoon against an independent Sentinel-2 reference (58.8 ha of outer-bank erosion), with all thresholds and rules tuned on 2024 only. For the best baselines, mean F1 rose from 0.67–0.70 with one scene to 0.77–0.80 with 3–8 scenes, and false erosion dropped sharply after 2–3 scenes. Adding m-of-k agreement and a ±δ abstention band (SAGE-River) raised F1 on decided pixels to 0.86–0.90 with ≤ 2.4 ha false erosion and resisted an anomalous scene, but left 9–13 % of pixels UNCERTAIN, containing 23–36 % of the true erosion; counting those as non-erosion, it did not consistently beat the tuned baseline. Reliability gains carry a coverage cost that must be reported.",
+ "findings": [
+  "More scenes → fewer false alarms: published-rule false erosion fell from 22 ha (1 scene) to 2 ha (3 scenes); F1 plateaued (0.77) after 3 scenes.",
+  "SAGE A+G: decided-pixel F1 0.86–0.90, ≤ 2.4 ha false erosion — but 9–13 % abstained, holding 23–36 % of true erosion.",
+  "UNCERTAIN counted as non-erosion: A+G 0.66–0.77 vs tuned baseline 0.73–0.80 → no consistent full-coverage gain (only k=2: 0.74 vs 0.73).",
+  "One anomalous scene (31 Jan) gave 197 ha false erosion with the tuned baseline (150 ha published); 2-scene A+G maps containing it stayed at ~1 ha."
+ ],
+ "contributions": [
+  "Erosion-map-level scene-budget benchmark (121 scene subsets, up to 7 decision rules) of the published Sentinel-1/GEE method against an independent Sentinel-2 reference.",
+  "Agreement + abstention rules reported with coverage and abstained-erosion area — no hidden pixels.",
+  "Threshold choice dominates: class-separability thresholds gave F1 0.35–0.42; erosion-tuned or published ones 0.67–0.80.",
+  "Open, reproducible pipeline (Python + GEE scripts, CSVs, frozen parameters)."
+ ],
+ "limitations": [
+  "One 12-km reach and one test monsoon; Sentinel-2 is an optical reference, not field truth (visual point check: 92 % / 100 % agreement, AI-interpreted, team spot-check pending).",
+  "SAR from Planetary Computer RTC γ⁰ (Earth Engine σ⁰ not run: no project ID); 2024 pool had 6 of 8 scenes.",
+  "Coverage target (≥ 90 %, set on 2024) fell to 87–88 % in 2025 for k ≥ 3; overlapping subsets are not independent samples.",
+  "Historical mapping only — no forecasting, no PINN."
+ ],
+ "exp_b": "maps possible on 8 Nov, 20 Nov and 2 Dec 2025 reached F1 0.73, 0.75 and 0.78 (tuned baseline, full coverage). A+G reached 0.83–0.85 on decided pixels but only 0.66–0.72 with UNCERTAIN counted as non-erosion. 95 % of the reference erosion was already visible by mid-December, so later erosion barely affected early maps."
+}

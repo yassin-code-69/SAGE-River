@@ -1,0 +1,351 @@
+        Summary Report
+
+Prediction of Riverbank Erosion 2026
+(Jamuna, Ganges, and Padma Rivers)
+Table of Contents
+
+1. Background .............................................................................................................................................. 1
+2. Objectives ................................................................................................................................................. 2
+3. General Considerations ....................................................................................................................... 2
+4. Erosion Monitoring for 2025 and Prediction in 2026 .............................................................. 4
+5. Accuracy of Erosion Prediction Made in 2025...........................................................................10
+6. Potential Users......................................................................................................................................10
+7. Conclusions ............................................................................................................................................14
+
+                                                                    i
+List of Tables
+
+Table 1: Evaluation of the Prediction of the Previous Year (2025) ...........................................................10
+Table 2: District-wise Riverbank Erosion Monitoring along the Jamuna, the Ganges, and the
+Padma Rivers for 2025.................................................................................................................................................12
+Table 3: District-wise Riverbank Erosion Vulnerability (within the range of 50% probability)
+along the Jamuna, the Ganges, and the Padma Rivers for 2026 ..................................................................13
+
+List of Figures
+
+Figure 1: Index Map Showing Erosion Vulnerable Locations along Major Rivers for 2026.............. 3
+Figure 2: Erosion Prediction for 2026 along the Jamuna River .................................................................... 5
+Figure 3: Erosion Prediction for 2026 along the Ganges River ..................................................................... 7
+Figure 4: Erosion Prediction for 2026 along the Padma River...................................................................... 9
+Figure 5: Index Map Showing Erosion Vulnerable Locations along Major Rivers for 2026............11
+
+                                                                   ii
+1. Background
+
+Riverbank erosion, one of the major natural disasters in Bangladesh, causes untold misery every
+year to thousands of people living along the banks of the rivers of Bangladesh. Bank erosion alone
+has rendered millions homeless and has become a severe social hazard. Most slum dwellers in
+large urban and metropolitan towns and cities are victims of riverbank erosion.
+
+Implementing protective structures against riverbank erosion comes with a high price tag.
+However, in conjunction with these physical measures, more economically viable non-structural
+strategies, such as erosion prediction, can significantly minimize the impact of riverbank erosion
+and alleviate the associated hardships. Using an erosion prediction tool aids in well-informed
+decision-making and efficient river management. Government bodies overseeing river
+management, including formulating strategies for constructing bank safeguards and
+implementing urgent measures, are incorporating these predictions into their practices.
+
+Since 2004, predictions for morphological changes have been conducted for the Jamuna River,
+followed by the Ganges and the Padma. Thus, it has been 22 years since predictions were made
+available to national-level stakeholders. Evaluation of the predictions for the last few years shows
+a reasonably good match with the occurrences. It is to be mentioned here that CEGIS has updated
+the existing prediction tools for the Jamuna, Padma, and Ganges rivers by analyzing good-quality
+long-time series images and by categorizing particular shapes of sedimentary features in 2017,
+as river morphology is changing over time, with changes in river planform due to natural and
+human interventions. Over the past several years, these methods of predicting morphological
+changes and bank erosion were successfully applied in a number of BWDB and WARPO projects,
+including the RBPP, JMREMP, FAP 21, Monitoring of the BWDB Training Project and EMIN. The
+results of the applied method are in good agreement with field observations. The predictions of
+riverbank erosion along the Jamuna, Padma, and Ganges rivers are presented in the following
+sections.
+
+National-level government and non-government agencies use this prediction technology. CEGIS
+disseminated erosion prediction information to the community on a pilot basis at four locations
+along the Jamuna and Padma Rivers in 2007. For community-level dissemination, CEGIS prepares
+a large poster in Bangla format and demarcates the high-risk and risk zones by red and yellow
+flags. The community took the prediction positively and used it to save their properties. The
+projections have proved to be a valuable means of reducing the suffering of the vulnerable people,
+which instigated the UNDP to take initiatives to include the vulnerable people in the Safety Net
+Programme, utilizing the experiences of CEGIS.
+
+Furthermore, BRAC, Bangladesh, disseminated the erosion prediction results to the local
+community from 2016 to 2018 to reduce the loss of properties and suffering of people at different
+locations in the three major rivers in Bangladesh, and the prediction results revealed the
+effectiveness of the local community. In addition, CARE Bangladesh also disseminated erosion
+prediction results to the local community along the bank of the Jamuna River in 2020.
+
+Prediction activities were funded by the Jamuna-Meghna River Erosion Mitigation Project
+(JMREMP) and EMIN project of the BWDB and WARPO from 2005 to 2008 by the UNDP. The
+JMREMP and FRERMIP of BWDB have funded erosion prediction efforts in recent years. This year,
+the study is supported by the Research and Development fund of CEGIS.
+
+                                                                   1
+                                                                                                                       Prediction of Riverbank Erosion for 2026
+
+2. Objectives
+The erosion prediction study targets two principal objectives:
+
+         � Prediction of riverbank erosion for 2026 at different vulnerable locations in the
+              Jamuna, the Ganges, and the Padma rivers; and
+
+         � Assessment of erosion prediction made in 2025.
+3. General Considerations
+Predictions have not been made for locations with less erodible bank materials, as it is challenging
+to estimate small amounts of erosion (1 to 50 m) with reliable accuracy using LANDSAT satellite
+images at 30 m X 30 m resolution. It is to be noted here that erosion may occur at any place
+following banklines, especially in the Jamuna River. Sometimes, if the predicted erosion is less
+than 100m, it is not incorporated into the report. Moreover, the BWDB has contracted several
+bank protection structures along the riverbank. Therefore, no prediction has been made for those
+particular locations.
+
+                                                                   2
+                                                                                                                    Prediction of Riverbank Erosion for 2026
+
+Figure 1: Index Map Showing Erosion Vulnerable Locations along Major Rivers for 2026
+
+                                                                  3
+                                                                                                                       Prediction of Riverbank Erosion for 2026
+
+4. Erosion Monitoring for 2025 and Prediction in 2026
+Erosion along the Jamuna River, 2025
+In 2025, the land eroded along the Jamuna was 348 ha. The Brahmaputra flood embankment is
+an essential feature that protects against floods along the right bank of the Jamuna River. Table 1
+gives a summary. Table 2 shows the monitoring details.
+Vulnerability along the Jamuna River, 2025
+Erosion prediction was done for both banks of the Jamuna River for 2026. The results are
+summarized as follows (Table 3):
+
+         � Vulnerable locations: Erosion is predicted for seven (7) locations. Out of which three
+              (3) locations are along the right bank and four (4) are along the left bank. The lateral
+              extension of which would be more than 100 m. The locations along the left bank are
+              in Kurigram, Jamalpur, Gaibandha, and Sirajganj, and the locations along the right
+              bank are in Gaibandha and Kurigram Districts.
+
+         � Land and settlement: About 460 ha of land and 64 ha of settlement are vulnerable to
+              erosion. The predicted maximum land erosion (about 223 ha) is in Gaibandha District,
+              while settlement (about 31 ha) is in Kurigram District. The second and third-highest
+              predicted erosion-vulnerable land are in Kurigram (about 106 ha) and Sirajganj
+              (about 83 ha) Districts.
+
+         � Educational institutions: Two (02) educational institutions in Gaibandha District,
+              including two government primary schools, are vulnerable to erosion.
+
+         � Mosques: Three (3) mosques might be vulnerable to erosion. Two (2) in Kurigram and
+              One (1) in the Jamalpur Districts.
+
+         � Health Center/Community Clinic: One (1) community clinic may be vulnerable to
+              erosion in the Jamalpur District.
+
+                                                                   4
+                                                                                            Prediction of Riverbank Erosion for 2026
+
+Figure 2: Erosion Prediction for 2026 along the Jamuna River
+
+                                              5
+                                                                                                                       Prediction of Riverbank Erosion for 2026
+
+Erosion along the Ganges River, 2025
+In 2025, about 593 ha of land along the Ganges River were eroded. Table 1 summarizes the
+situation. Table 2 presents the monitoring details.
+Vulnerability along the Ganges River, 2026
+The vulnerability assessment of land, settlement, roads, educational institutions, hat/bazaars,
+health centers, and government and non-government offices, etc., for the year 2026 is presented
+in the following (Table 3):
+
+         � Erosion vulnerable locations: Erosion is predicted for three (3) locations. Out of which
+              two (2) locations are along the left bank and one along the right bank of the river.
+              These locations lie in Pabna and Kushtia Districts.
+
+         � Land and settlement: About 320 ha of land and 5 ha of settlements are vulnerable to
+              erosion. The predicted maximum land erosion is about 215 ha in the Pabna District,
+              while the vulnerable settlement has been found to be about 5 ha in the Kushtia
+              District.
+
+         � Educational institutions: One (1) high school in Kushtia District is vulnerable to
+              erosion.
+
+                                                                   6
+                                                                                                                                         Prediction of Riverbank Erosion for 2026
+
+Figure 3: Erosion Prediction for 2026 along the Ganges River
+
+                                             7
+                                                                                                                       Prediction of Riverbank Erosion for 2026
+
+Erosion along the Padma River, 2025
+In 2025, about 93 ha of land along the Padma River were eroded. Table 1 provides a summary,
+and Table 2 provides monitoring details.
+Vulnerability along the Padma River, 2026
+The vulnerability assessment of the land, settlement, roads, educational institutions, hat/bazaars,
+health centers, government, and non-government offices for the year 2026 is presented in the
+following (Table 3):
+
+         � Erosion vulnerable location: Erosion is predicted for one (1) location along the right
+              bank in Faridpur District.
+
+         � Land and settlement: About 135 ha of land and 4 ha of settlement are vulnerable to
+              erosion in Faridpur District.
+
+                                                                   8
+                                                                                                                                         Prediction of Riverbank Erosion for 2026
+
+Figure 4: Erosion Prediction for 2026 along the Padma River
+
+                                             9
+                                                     Prediction of Riverbank Erosion for 2026
+
+5. Accuracy of Erosion Prediction Made in 2025
+
+CEGIS always makes efforts to carry out predictions in a conservative manner, not giving false
+indications to people. Assessment of riverbank erosion prediction made for 2025 shows a
+reasonable match with the occurrences (Table 1). Erosion prediction was made for five (5)
+locations in the Jamuna River, two (2) locations each in the Ganges and Padma Rivers. Erosion
+occurred in four (4) locations as predicted in 2025 for the Jamuna River. However, there were
+two (2) locations where erosion was not predicted. The Padma River also shows relatively good
+matching with the prediction. Erosion occurred in all predicted locations. In addition to that, the
+prediction also indicates a good match with the Ganges River. Erosion occurred in all the locations
+as predicted in 2025, while there were two (2) locations where erosion was not predicted.
+
+           Table 1: Evaluation of the Prediction of the Previous Year (2025)
+
+           Features         Jamuna                   Ganges                   Padma
+
+                            Right bank Left bank              156                       402
+                                                              593                         93
+Land (ha)  Predicted (50%)  61                  158                                       02
+           Occurred                                            02                         02
+Location   Predicted        91                  257            04
+(no)       Occurred
+                            02                  03
+
+                            02                  04
+
+6. Potential Users
+
+The erosion vulnerability assessment presented above represents a 50% probability. The
+vulnerability of different features has also been found in the range of 30% and 70% probability.
+Although eleven (11) vulnerable locations have been identified as the most susceptible to erosion
+along both banks of the Jamuna, Ganges, and the Padma Rivers, other locations may also be at
+risk.
+
+Organizations can use the vulnerability assessment results to plan and implement activities to
+protect existing structures and construct new ones. The BWDB needs to pay due attention to all
+the vulnerable locations, especially the locations of the vulnerable embankments. The Roads and
+Highways Department (RHD) and the Local Government Engineering Department (LGED) may
+initiate necessary action to mitigate the envisaged loss of roads. The Ministry of Education (MoE)
+and NGOs need to look into the predicted losses of educational institutions. Other relevant
+organizations may also pay attention to the issue of erosion.
+
+                            10
+                                                                                                                    Prediction of Riverbank Erosion for 2026
+
+Figure 5: Index Map Showing Erosion Vulnerable Locations along Major Rivers for 2026
+
+                                                                 11
+                                                                                                                         Prediction of Riverbank Erosion for 2025
+
+        Table 2: District-wise Riverbank Erosion Monitoring along the Jamuna, the Ganges, and the Padma Rivers for 2025
+
+River   District                        Land (ha)       Settlement (ha)          Embankment (m)                     Road (m)
+
+                                                  149                      40    Active     Inactive National road  District road Upazila road  Rural road
+                                                    39                     06                                                                              34
+        Kurigram                                    49                     04            -       -  -               -         -                               -
+        Gaibandha                                   23                     02                                                                                 -
+        Jamalpur                                    49                     01            -       -  -               -         -                               -
+        Bogura                                      26                     09                                                                                 -
+        Sirajganj                                   02                     05            -       -  -               -         -                               -
+        Tangail                                     11                     03                                                                                 -
+Jamuna  Pabna                                                              70            -       -  -               120       -                               -
+        Manikganj                                 348                      08                                                                              34
+                                                    82                     12            -       -  -               -         -                               -
+                            Sub-total                                                                                                                         -
+        Chapai Nawabganj                          152                         -          -       -  -               568       35                              -
+        Rajshahi                                  203                      04                                                                              10
+        Pabna                                                                            -       -  -               -         -                               -
+        Rajbari                                     72                        -                                                                               -
+        Kushtia                                     77                        -          -       -  -               -         -                            10
+        Natore                                      07                     24                                                                                 -
+                                                  593                      02            -       -  -               688       35                           77
+                            Sub-total               58                     06                                                                                 -
+        Faridpur                                    14                        -          -       -  -               -         -                               -
+        Shariatpur                                  18                     01                                                                              77
+        Madaripur                                   03                     09            -       -  -               -         -
+        Manikganj                                   93                   103                                                                             121
+Ganges                                          1034                                     -       -  -               37        -
+                            Sub-total
+                                 Total                                                   -       -  -               -         -
+
+                                                                                         -       -  -               -         -
+
+                                                                                         -       -                  -         -
+
+                                                                                         -       -  -               37        -
+
+                                                                                         -       -  -               -         -
+
+Padma                                                                                    -       -  -               01        -
+
+                                                                                         -       -  -               -         -
+
+                                                                                         -       -  -               -         -
+
+                                                                                         -       -  -               01        -
+
+                                                                                         -       -  -               726       35
+
+                                                                                 12
+                                                                                                                                       Prediction of Riverbank Erosion for 2025
+
+Table 3: District-wise Riverbank Erosion Vulnerability (within the range of 50% probability) along the Jamuna, the Ganges, and the Padma Rivers for
+                                                                                                   2026
+
+                                                                           Road (m)                     Educational         Hat/          Health
+                                                                                                        Institution         bazar       Centers/
+River District              Land  Settlement     Embankment  National      District     Upazila  Rural                      (nos)      Community          Mosque
+                            (ha)      (ha)             (m)     road         road         road    road       (nos)                      Clinic (nos)
+                                                                                                                                    -                               01
+              Jamalpur      48    06             -                -                  -  -           -                    -          -               01              02
+                                                                  -                                 -                    -                             -
+Jamuna        Kurigram      106   31             -                -                  -  -           -                  02           -                  -              -
+                                                                  -                                 -                    -          -                  -              -
+              Gaibandha     223   17             -                -                  -  -           -                 02            -                               03
+                                                                  -                                 -                    -          -               01                -
+              Sirajganj     83    10             -                -                  -  -           -                  01           -                  -              -
+                                                                  -                                 -                 01            -                  -              -
+              Sub-total     460   64             -                -                  -  -           -                    -          -                  -              -
+                                                                  -                                 -                    -          -                  -              -
+Padma Ganges  Pabna         215               -  -                                   -  -           -                 03                               -            03
+                                                                        -
+              Kushtia       105   05             -                                   -  -                                                           01
+
+              Sub-total     320   05             -                                   -  -
+
+              Faridpur      135   04             -                                   -  -
+
+              Sub-total     135   04             -                                   -  -
+
+                     Total  915   73             -                                   -  -
+
+                                                                           13
+                                                                                                                      Prediction of Riverbank Erosion for 2026
+
+7. Conclusions
+In 2025, riverbank erosion was predicted along the Jamuna, the Ganges, and the Padma. Satellite
+images from January 2026 were used to evaluate the predictions made in 2025. Erosion
+predictions were made for five (5) locations in the Jamuna River, two (2) in the Ganges River, and
+two (2) in the Padma River. CEGIS always evaluates the prediction made the previous year. The
+assessment of the riverbank erosion prediction for 2025 shows a rational match with observed
+occurrences. There were a few locations where erosion occurred, but the prediction was not
+made.
+Using the updated tools, river bank erosion has been predicted for 2026 in eleven (11) vulnerable
+locations, seven (7) of which are for the Jamuna, three (3) for the Ganges, and one (1) for the
+Padma River. It is predicted that along both banks of the Jamuna River, with 50% erosion
+vulnerability, bank erosion would be about 460 ha in 2025, whereas it would be 320 ha and 135
+ha along the banks of the Ganges and the Padma Rivers, respectively.
+
+                                                                  14
+                                    Prediction of Riverbank Erosion for 2025
+
+15
+
