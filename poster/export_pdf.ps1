@@ -20,7 +20,7 @@ try {
         $pres.SaveAs($outPath, 32)
     }
     $pres.Close()
-    Write-Output "PDF written: $outPath (note: SaveAs embeds images at ~200 ppi, sufficient for a 48x36 in poster)"
+    Write-Output "PDF written: $outPath (note: SaveAs embeds images at ~200 ppi, sufficient for a 4 x 4 ft poster)"
 } finally {
     $ppt.Quit()
     [System.Runtime.InteropServices.Marshal]::ReleaseComObject($ppt) | Out-Null
