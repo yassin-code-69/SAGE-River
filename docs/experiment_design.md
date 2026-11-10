@@ -8,6 +8,18 @@
 
 Notes: the 2024 post window and the 2025 pre window overlap in time (Nov 2024–Jan 2025), and the Feb–Mar 2025 optical composite is the "post" of 2024 and the "pre" of 2025. This is a mild dependence, not label leakage: the 2025 reference labels (2025→2026 change) are never seen during tuning.
 
+## Update 11 Nov 2026 ~03:20
+- **GEE σ⁰ is the primary source.** Earth Engine became available, so `--source gee` was run for Kurigram; per the pre-stated rule it is now primary. The PC γ⁰ runs are kept as an adapted cross-check.
+- **SAGE-River v2** (quality-aware, erosion-sensitive mapping with prioritized review) was pre-registered in `docs/sage_river_v2_design.md`. Checksums and freeze times are in `docs/sage_river_v2_design.md5`.
+- **Result status:**
+  - Kurigram 2025 v2 results are **exploratory**, because the v2 idea came from inspecting them.
+  - Sirajganj–Kazipur 2025 is the **independent test**: new reach; v2 design and code frozen before its SAR data were processed.
+
+- **v2 results:** `docs/sage_river_v2_results.md`. The pre-registered criteria are in `outputs/tables/v2_preregistered_criteria.csv`:
+  - met in 11 of 12 independent tests;
+  - failed for Sirajganj 2025 at k = 8;
+  - no automatic accuracy gain over the tuned baseline.
+
 ## Data source switch
 `s1_stack.py --source gee` (COPERNICUS/S1_GRD σ⁰, the baseline's own data) is preferred. If Earth Engine is not authorised, `--source pc` uses Planetary Computer `sentinel-1-rtc` (γ⁰ terrain-flattened, no angle band). The source is stored in every output file name and in the CSV `source` column. Published dB thresholds are defined for GEE σ⁰ and are reported for reference only when the source is `pc`.
 

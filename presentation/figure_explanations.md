@@ -16,10 +16,27 @@
 **EN:** Each point = mean over all possible scene subsets of that size (k = 1, 2, 3, 6, 8) for the 2025 test monsoon. Shaded band = ±1 SD across subsets (subset variability, not a confidence interval). Panels: precision, recall, F1, IoU, decision coverage, false-erosion area.
 **বাংলা:** প্রতিটি বিন্দু = ওই সংখ্যক ছবির সব সম্ভাব্য combination-এর গড়। ছায়া = combination-ভেদে ওঠানামা। Coverage মানে কত শতাংশ pixel-এ সিদ্ধান্ত দেওয়া হয়েছে।
 
-## Figure D — Error and uncertainty map
-**EN:** Before (Feb–Mar 2025) and after (Feb–Mar 2026) optical images, and the SAGE-River map from the first three scenes, showing where it is right, wrong, or abstains.
-**বাংলা:** আগে-পরের অপটিক্যাল ছবি আর প্রথম ৩টি রাডার ছবি দিয়ে SAGE-River ম্যাপ — কোথায় ঠিক, কোথায় ভুল, কোথায় "নিশ্চিত না"।
+## Figure D — A bad scene, audited (31 Jan 2026)
+**EN:** Panel 1 shows the 31 Jan Sentinel-1 scene, with dark field-shaped patches on the west floodplain. Panel 2 shows that this scene alone gives the tuned baseline 160 ha of false erosion (orange). Panels 3 and 4 use 19 + 31 Jan together: the baseline drops to 11 ha and SAGE A+G to 2.2 ha (grey = UNCERTAIN). The root-cause audit found no processing error. The patches are temporarily inundated fields, also seen in the R150 descending orbit and in Sentinel-2 (88–99 % water, 28 Jan–12 Feb).
+**বাংলা:** ৩১ জানুয়ারির রাডার ছবিতে পশ্চিমের জমিতে মাঠের আকারের কালো দাগ দেখা যায়। ছবিটি একা ব্যবহার করলে baseline ১৬০ হেক্টর ভুল ভাঙন দেখায়। ১৯ ও ৩১ জানুয়ারি একসাথে নিলে baseline-এ ১১ হেক্টর আর SAGE-এ ২.২ হেক্টর। কোডে ভুল নেই; দাগগুলো সাময়িকভাবে পানিতে ডোবা জমি, যা অন্য orbit আর Sentinel-2-তেও দেখা যায়।
 
 ## Figure E — Early maps (chronological)
 **EN:** F1 of maps that could have been produced on the date of the 1st, 2nd and 3rd acquisition after 1 November, against the cumulative reference (left) and against erosion already visible by mid-December (right).
 **বাংলা:** ১ নভেম্বরের পর ১ম, ২য়, ৩য় ছবি আসার দিনেই যে ম্যাপ বানানো যেত, তার F1 — বাঁয়ে পরের ফেব্রুয়ারি–মার্চের reference, ডানে মধ্য-ডিসেম্বরের মধ্যে দৃশ্যমান ভাঙন।
+
+
+## Figure F — Abstention trade-off
+**EN:** As the abstention band δ widens, precision on decided pixels rises, but coverage falls and more real erosion is abstained. This is a post-hoc view of 2025 and was not used to choose δ.
+**বাংলা:** δ বাড়ালে সিদ্ধান্ত-দেওয়া pixel-এ precision বাড়ে, কিন্তু coverage কমে আর বেশি আসল ভাঙন "অনিশ্চিত"-এ চলে যায়। এটা পরে দেখা, δ বাছাইয়ে ব্যবহার হয়নি।
+
+## Figure G — v2 ablation (full-area F1)
+**EN:** Bars show F1 step by step: tuned baseline → + agreement → + gating → v1 → v2 high-confidence (no review) → v2 + 10 % / 20 % prioritized review → v2 + 20 % random review. Panels: Kurigram 2025 (exploratory), Sirajganj 2025 (independent) and Sirajganj 2024 (Kurigram parameters). Without review, v2 equals v1 and is below the tuned baseline. Review bars use a simulated perfect analyst, so they are upper bounds.
+**বাংলা:** ধাপে ধাপে F1: baseline → agreement → gating → v1 → v2 (যাচাই ছাড়া) → v2 + ১০%/২০% অগ্রাধিকার যাচাই → v2 + ২০% random যাচাই। যাচাই ছাড়া v2 = v1, আর tune করা baseline-এর চেয়ে কম। যাচাইয়ের বার "নিখুঁত বিশ্লেষক" ধরে নেওয়া upper bound।
+
+## Figure H — Prioritized vs random review (poster section 10)
+**EN:** The x-axis is the percentage of the REVIEW area inspected. The y-axis is the percentage of the erosion inside REVIEW that is recovered. The orange line is v2's ranked order; the grey band is 500 random orders (5–95 %); the dashed line is the random mean; the purple dotted line is random review of v1's UNCERTAIN pixels with the same hectares. The higher and earlier the orange curve, the less effort is needed.
+**বাংলা:** x-অক্ষ: "যাচাই" এলাকার কত শতাংশ দেখা হলো। y-অক্ষ: ওই এলাকার ভাঙনের কত শতাংশ পাওয়া গেল। কমলা = v2-এর অগ্রাধিকার; ধূসর ছায়া = ৫০০টি random ক্রম; বেগুনি = v1-এর অনিশ্চিত pixel random-ভাবে দেখা। কমলা রেখা যত আগে ওপরে ওঠে, তত কম পরিশ্রমে বেশি ভাঙন মেলে।
+
+## Figure I — Three-class map
+**EN:** The map uses the first three scenes. Red = HIGH-CONFIDENCE erosion; orange = REVIEW, top 10 % priority; yellow = REVIEW, 10–30 %; light grey = REVIEW, lower priority; uncoloured = LIKELY STABLE. The cyan outline is the Sentinel-2 reference, shown for evaluation only and never used to make the map.
+**বাংলা:** প্রথম ৩টি ছবি দিয়ে তিন-শ্রেণির ম্যাপ। লাল = নিশ্চিত ভাঙন; কমলা = যাচাই (সবচেয়ে বেশি অগ্রাধিকার); হলুদ = মাঝারি; হালকা ধূসর = কম অগ্রাধিকার। নীলচে রেখা = Sentinel-2 reference, যা শুধু মূল্যায়নের জন্য, ম্যাপ বানাতে ব্যবহার হয়নি।

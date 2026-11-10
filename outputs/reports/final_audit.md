@@ -1,15 +1,15 @@
 # Final audit
-run: 2026-11-11T02:13:31  source: pc
+run: 2026-11-11T04:21:01  source: gee
 
 - PASS — exists: outputs/tables/sentinel1_scene_inventory.csv
 - PASS — exists: outputs/tables/sentinel1_acquisitions.csv
 - PASS — exists: outputs/figures/figure_A_scene_availability.png
 - PASS — exists: outputs/figures/figure_0_study_area.png
-- PASS — exists: outputs/tables/experiment_A_all_subsets_pc.csv
-- PASS — exists: outputs/tables/experiment_A_summary_pc.csv
-- PASS — exists: outputs/tables/experiment_B_chronological_pc.csv
-- PASS — exists: outputs/tables/selected_parameters_pc.json
-- PASS — exists: outputs/tables/calibration_thresholds_2024_pc.csv
+- PASS — exists: outputs/tables/experiment_A_all_subsets_gee.csv
+- PASS — exists: outputs/tables/experiment_A_summary_gee.csv
+- PASS — exists: outputs/tables/experiment_B_chronological_gee.csv
+- PASS — exists: outputs/tables/selected_parameters_gee.json
+- PASS — exists: outputs/tables/calibration_thresholds_2024_gee.csv
 - PASS — exists: outputs/figures/figure_B_maps.png
 - PASS — exists: outputs/figures/figure_C_performance.png
 - PASS — exists: outputs/figures/figure_D_errors.png
@@ -44,4 +44,24 @@ run: 2026-11-11T02:13:31  source: pc
 - PASS — recomputed BASE_calibrated k=3 subset 1-2-5
 - PASS — recomputed BASE_calibrated k=6 subset 1-3-4-5-6-7
 - PASS — recomputed BASE_calibrated k=3 subset 2-4-6
+- PASS — exists: docs/sage_river_v2_design.md5
+- PASS — v2 frozen file unchanged since freeze: docs/sage_river_v2_design.md (6cda6a2c)
+- PASS — v2 frozen file unchanged since freeze: python/sage_v2.py (10116e55)
+- PASS — v2 frozen file unchanged since freeze: python/sage_methods.py (bfcb3d52)
+- PASS — v2 frozen file unchanged since freeze: python/experiment_runner.py (5083ba0c)
+- PASS — v2 frozen file unchanged since freeze: python/metrics.py (dbf64ed3)
+- PASS — v2 frozen file unchanged since freeze: python/reference_validation.py (c996572b)
+- PASS — v2 frozen file unchanged since freeze: python/transfer_eval.py (9fc6d0aa)
+- PASS — Sirajganj SAR 2024 created 2026-11-11T03:40:29 after v2 code freeze 2026-11-11T03:12:45
+- PASS — Sirajganj SAR 2025 created 2026-11-11T03:36:04 after v2 code freeze 2026-11-11T03:12:45
+- PASS — v2 ranking model trained on 2024 only
+- PASS — exists: outputs/tables/v2_preregistered_criteria.csv
+- PASS — v2 criteria flags recomputed from their own columns
+- PASS — v2 independent tests with both criteria met: 11/12 (informational)
+- PASS — exists: outputs/figures/figure_H_poster.png
+- PASS — exists: outputs/figures/figure_G_v2_ablation.png
+- PASS — exists: outputs/figures/figure_I_three_class_map.png
+- PASS — exists: docs/sage_river_v2_results.md
+- PASS — exists: outputs/reports/root_cause_audit_20260131.md
+- PASS — exists: outputs/tables/v2_ablation_all_reaches.csv
 - PASS — poster text free of un-negated forbidden claims (hits: [])

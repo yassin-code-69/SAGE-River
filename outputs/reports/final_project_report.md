@@ -1,87 +1,129 @@
 # SAGE-River — Final Completion and Limitation Report
-Generated 11 Nov 2026 (~02:15 BST). Event: IEEE BUBT Academic Research Showcase, 13–14 Nov 2026.
+Updated 11 Nov 2026 ~04:20 BST (supersedes the 02:15 version). Event: IEEE BUBT Academic Research Showcase, 13–14 Nov 2026.
 
 ## 1. What was done (all executed, not just scripted)
-1. **Environment:** `.venv` (Python 3.14; the 3.11 launcher entry points to a missing executable), pinned `requirements.txt`. Self-tests for metrics and decision rules pass.
-2. **Earth Engine:** browser login completed by the user (credentials saved). **No Cloud project ID was provided**, so `ee.Initialize` could not run. GEE scripts (`gee/01–07`) are built for the final AOI and pass a JavaScript syntax check, but were **not executed in Earth Engine**.
-3. **Study area:** Sentinel-2 reconnaissance of Kurigram and Sirajganj boxes (30 m). The Bogura box crashed on a console-encoding error after Sirajganj and was not rerun. Final AOI is a 12 km Jamuna reach upstream of Chilmari, Kurigram: UTM45N 764–790 E, 2836–2848 N; 89.6289–89.8902 °E, 25.6131–25.7262 °N (`data/aoi/aoi.geojson`, `outputs/figures/figure_0_study_area.png`).
-4. **Scene inventory:** ASF and Planetary Computer catalogues for the exact AOI (`outputs/tables/sentinel1_*.csv`, Figure A). Phase 0 counts were confirmed (`docs/phase0_audit.md`).
-5. **SAR data:** Planetary Computer `sentinel-1-rtc` γ⁰ VV, R114 ascending. Linear values were filtered with circle r=7 then converted to dB; a square 7×7 run was added for sensitivity. Scene pools:
+1. **Environment.** `.venv` (Python 3.14) with pinned `requirements.txt`. Self-tests for metrics and decision rules pass.
+2. **Earth Engine.** Project `fleet-surface-473722-b9`. **GEE COPERNICUS/S1_GRD σ⁰ is the primary SAR source** (tag `gee`).
+   - Per-image processing: angle mask 30–45° → circle r = 7 filter in linear units → dB, then a per-day mosaic. Observed angles over the AOI were 36.4–38.1°.
+   - Scene pools:
 
-   | Year | Pre composite | Post pool |
+     | Year | Pre composite | Post pool |
+     |---|---|---|
+     | 2024 | 14 scenes | 8 scenes |
+     | 2025 | 16 scenes | 8 scenes |
+
+   - Planetary Computer RTC γ⁰ (tag `pc`) is kept as an *adapted* cross-check. It is not an exact reproduction of GEE σ⁰ (see `docs/methodology.md` §2.1).
+3. **Study area.**
+   - Development reach: Kurigram, 26 × 12 km, 12 km of the Jamuna upstream of Chilmari (`data/aoi/aoi.geojson`).
+   - Independent reach for v2: Sirajganj–Kazipur, 28 × 12 km, 89.569–89.847 °E, 24.644–24.748 °N (`data/reaches/sirajganj/`).
+4. **Scene inventory.** GEE, ASF and PC catalogues (`outputs/tables/sentinel1_*.csv`, Figure A). R114 ascending gives 2–3 scenes per November.
+5. **Reference.** Sentinel-2 L2A with the SCL mask, Feb–Mar composites, channel-connected, in a 1.5 km outer-bank strip.
+
+   | Reach / year | Reference erosion | Blind point check (erosion / non-erosion) |
    |---|---|---|
-   | 2024 | 11 scenes | 6 scenes |
-   | 2025 | 12 scenes | 8 scenes |
+   | Kurigram 2025 | 58.8 ha | 36/39 = 92 % / 47/47 = 100 % |
+   | Kurigram 2024 | 59.8 ha | – |
+   | Sirajganj 2025 | 12.2 ha | 10/15 = 67 % (15 undecidable) / 27/29 = 93 % |
+   | Sirajganj 2024 | 59.9 ha | – |
 
-   Product IDs are listed in `data/cache/s1_pc_*.json`.
-6. **Reference:** Sentinel-2 L2A with the SCL cloud mask, Feb–Mar composites, and an as-of Nov–Dec composite. Reference erosion is 58.8 ha in 2025 and 59.8 ha in 2024. AOI clear-observation quality is in `s2_reference_quality.csv`.
-7. **Reference point check:** 120 stratified points, interpreted blind to stratum. Agreement was 36/39 = 92 % for the erosion stratum and 47/47 = 100 % for non-erosion near the bank. Interpretation was by the AI analyst; the team still needs to spot-check.
-8. **Experiments:**
-   - Calibration and selection on 2024 only.
-   - Parameters frozen at 01:59:39 (JSON), then the 2025 test.
-   - Experiment A: all 121 subsets. Experiment B: first 1–3 scenes after 1 November.
-   - A fairness-control baseline (F1-tuned) was added after inspecting only the 2024 tables. Run 1 without it is archived in `outputs/reports/run1_without_F1tuned_baseline/`.
-   - Post-hoc δ trade-off on 2025 is labelled as not used for selection.
-9. **Figures:** 0, A, B, C (full and poster versions), D (anomalous scene), E (chronological), F (trade-off), plus supplementary reference QA figures.
-10. **Poster:** `poster/poster_editable.pptx`
-    - 48×36 in, 31 text boxes, 2 native charts, 2 native tables, 7 images.
-    - `poster/poster_final.pdf`, exported by PowerPoint; images embedded at ~200 ppi.
-    - `poster/poster_content_en.md` and `poster/references.bib`. Titles were checked against Crossref.
-11. **Presentation:** 30-second and 2-minute English pitch, Bangla guide, judges' Q&A (general and results), figure explanations, team roles.
-12. **Final audit:** `outputs/reports/final_audit.md`. All checks pass:
-    - file existence and subset counts;
-    - metric ranges and count consistency;
-    - 5 recomputed rows;
-    - freeze order;
-    - claim scan with negations allowed.
+   The points were interpreted by the AI analyst; the team still needs to spot-check them.
+6. **v1 experiments (Kurigram, GEE).**
+   - Calibration and selection on 2024 only; frozen JSON; then the 2025 test.
+   - Experiment A: all 121 subsets. Experiment B: first 1–3 scenes after 1 Nov.
+   - F1-tuned fairness-control baseline included.
+7. **Root-cause audit of the 31 Jan 2026 scene** (`outputs/reports/root_cause_audit_20260131.md`).
+   - **No implementation error.** NoData, alignment, radiometry, mosaics and thresholds were all checked.
+   - **Cause:** temporarily inundated fields, confirmed by three independent sources.
+   - **The scene is kept** in every experiment.
+   - One earlier claim in that report was corrected after measurement: v2 bank connectivity does *not* remove this error at k = 1.
+8. **SAGE-River v2** (quality-aware triage + prioritized review).
+   - Pre-registered: design 02:58, code freeze 03:12:45, transfer addendum 03:30:51.
+   - md5 checksums in `docs/sage_river_v2_design.md5`; the final audit re-verified them as unchanged.
+   - Evaluated on four reach/years (see §2.3).
+   - Results and conclusion: `docs/sage_river_v2_results.md`.
+9. **Figures.**
+   - 0, A, B, C, D, E, F (v1);
+   - G (v2 ablation), H (prioritized vs random review), I (three-class map, Kurigram and Sirajganj);
+   - supplementary audit and reference-QA figures.
+   - PC-based versions are archived in `outputs/figures/pc_rtc/`.
+10. **Poster.** `poster/poster_editable.pptx` and `poster/poster_final.pdf`.
+    - 48 × 48 in; native text, 2 native charts, 3 native tables.
+    - Rebuilt from the GEE results with v2 (section 10 table read from `v2_preregistered_criteria.csv`).
+    - The v1/PC version is archived in `poster/archive_v1_pc/`.
+11. **Presentation.** Pitches (EN/BN), judges' Q&A (general and results, including v2 and the root cause), figure explanations, team roles.
+12. **Final audit.** `outputs/reports/final_audit.md` (`--source gee`) shows 66 PASS and 0 FAIL. It now also checks:
+    - the v2 frozen-file checksums;
+    - that the Sirajganj SAR was created after the code freeze;
+    - recomputation of the criteria flags.
 
-## 2. Key verified results (2025 test)
-- **How many scenes are enough:** with the published rule, F1 is 0.70 (k=1), 0.77 (k=3) and 0.77 (k=8). False erosion is 22 ha at k=1 and 2 ha at k=3. Single scenes range from F1 0.30 to 0.77.
-- **Tuned baseline:** F1 0.67 (k=1) rising to 0.80 (k=8).
-- **SAGE A+G:**
-  - F1 on decided pixels 0.86–0.90; false erosion ≤ 2.4 ha.
-  - Coverage 87–91 %; 13.7–21.2 ha of the 58.8 ha reference erosion was abstained.
-  - With UNCERTAIN counted as non-erosion, F1 is 0.66–0.77, which is not consistently better than the tuned baseline.
-- **Anomalous scene (31 Jan 2026):** 197 ha of false erosion alone (tuned baseline). In 2-scene maps that include it, false erosion is 36 ha on average for the baseline and about 1 ha for A+G.
-- **Class-separability (Youden) thresholds:** F1 0.35–0.42. Threshold choice dominates the result.
-- **Filter:** the paper's square 7×7 changed F1 by −0.02 to +0.08. The ranking of methods did not change.
+## 2. Key verified results
+### 2.1 Scene budget (Kurigram 2025, GEE σ⁰, means over all C(8,k) subsets)
+| Method | k = 1 | k = 3 | k = 8 |
+|---|---|---|---|
+| Published thresholds, F1 | 0.56 | 0.71 | 0.82 |
+| Published thresholds, false erosion | 74 ha | 24 ha | 7.5 ha |
+| 2024-tuned baseline, F1 | 0.70 | 0.79 | 0.82 |
+
+The tuned thresholds came out close to the published ones. Class-separability (Youden) thresholds were poor (F1 0.35–0.46).
+
+### 2.2 Agreement + abstention (v1, A+G)
+- **Decided pixels:** F1 0.85–0.90, false erosion < 3 ha.
+- **Cost:** coverage 88–91 %; 14–21 ha of the 58.8 ha reference erosion was abstained.
+- **Counting UNCERTAIN as non-erosion:** F1 0.66–0.77, never above the tuned baseline (0.76–0.82). This held on Sirajganj too.
+- **31 Jan scene:**
+  - alone, tuned baseline: 160 ha of false erosion;
+  - 2-scene subsets containing it: tuned baseline 12.1 ha, A+G 1.6 ha.
+
+### 2.3 v2 triage + prioritized review (`docs/sage_river_v2_results.md`)
+- **No automatic gain.** v2 high-confidence F1 equals v1 and is below the tuned baseline in all 16 reach × k cells.
+- **Prioritized vs random review at 20 % effort.**
+
+  | Evaluation | Recovered (v2 prioritized) | Random mean |
+  |---|---|---|
+  | Kurigram 2025, k = 3 (exploratory) | 21.3 ha | 5.5 ha |
+  | Sirajganj 2025, k = 3 (independent) | 7.2 ha | 2.1 ha |
+  | Sirajganj 2024 transfer, k = 3 | 19.7 ha | 8.0 ha |
+
+- **Pre-registered criteria:**
+  - Kurigram (exploratory): 4/4 cells met.
+  - Independent evaluations: 11/12 met. The failure is the primary local test at k = 8, where prioritized equals the random 95th percentile.
+  - Several independent margins are very small.
+- **Caveats:**
+  - The reviewer is a simulated oracle.
+  - REVIEW covers 184–1218 ha.
+  - In the Sirajganj 2024 transfer, randomly reviewing v1's UNCERTAIN pixels was about as good at 20 % effort (k = 8: 15.2 vs 14.9 ha).
+- **Single-scene maps remain unreliable.** At k = 1 on 31 Jan, v2 high-confidence still contains 104 ha of false erosion.
 
 ## 3. Status table
 | Component | Status | Evidence |
 |---|---|---|
-| Literature Review | Completed with limitations | `docs/literature_review.md` (F&F and Shampa read in full text; others abstract-level; IEEE Xplore/Scopus not searched) |
-| Research Gap | Completed and verified | `docs/research_gap.md`; cautious "to our knowledge" wording |
-| GEE Authentication | Partially completed | Login done; **project ID missing**, so `ee.Initialize` not run; scripts ready in `gee/` |
-| Final Study Area | Completed and verified | `data/aoi/aoi.geojson`, Figure 0, recon maps |
-| Scene Inventory | Completed with limitations | ASF and PC inventory for the AOI; **GEE inventory not run** |
-| Baseline | Completed with limitations | Released-code rule reproduced in Python on PC RTC γ⁰ (not GEE σ⁰; no angle mask); published, calibrated and F1-tuned variants |
-| Independent Reference | Completed with limitations | S2 L2A reference; 120-point visual check (92 %/100 %) by the AI analyst; team spot-check pending |
-| SAGE-River | Completed and verified | `python/sage_methods.py` (self-tests); `gee/06_sage_river.js` (syntax only) |
-| Experiment A | Completed and verified | `experiment_A_*_pc.csv`; audit recomputation passed |
-| Experiment B | Completed with limitations | `experiment_B_chronological_pc.csv`; 2024 lacks the 1 Nov scene in PC |
-| Evaluation | Completed and verified | P/R/F1/IoU, coverage, false/missed/abstained ha, full-coverage F1 |
-| Poster PPTX | Completed with limitations | `poster/poster_editable.pptx`; team names, e-mail and supervisor are placeholders |
-| Poster PDF | Completed with limitations | `poster/poster_final.pdf`; ~200 ppi images; organiser size not confirmed (official template is A1 portrait) |
+| Literature review | Completed with limitations | `docs/literature_review.md` (F&F and Shampa full text; others abstract-level) |
+| Research gap | Completed and verified | `docs/research_gap.md`; cautious "to our knowledge" wording |
+| GEE authentication | Completed and verified | project initialised; `*_gee.*` outputs |
+| Study areas | Completed and verified | Kurigram `data/aoi/`; Sirajganj `data/reaches/sirajganj/aoi/` |
+| Scene inventory | Completed and verified | GEE, ASF and PC (`sentinel1_*.csv`) |
+| Baseline (GEE σ⁰) | Completed and verified | published, calibrated, F1-tuned |
+| Root-cause audit | Completed and verified | `root_cause_audit_20260131.md`; interpretation (boro-rice flooding) not field-verified |
+| Independent reference | Completed with limitations | S2 optical reference; AI point check; Sirajganj 2025 is weak (12 ha, 67 %) |
+| SAGE-River v1 | Completed and verified | `sage_methods.py`, `experiment_A/B_*_gee.csv` |
+| SAGE-River v2 | Completed and verified (modest, review-dependent gain) | `sage_v2.py`, `transfer_eval.py`, `v2_*` tables, criteria CSV |
+| Independent evaluation | Completed with limitations | one independent reach, two years; the primary test is weak |
+| Poster PPTX / PDF | Completed with limitations | 48 × 48 in; other team members, department and university are placeholders |
 | Presentation | Completed and verified | `presentation/*.md` |
 
 ## 4. What remains (human actions)
-1. **Earth Engine σ⁰ re-run (optional but recommended).** Provide a Cloud project ID, then from `python/`:
-   ```
-   ..\.venv\Scripts\python.exe gee_auth_check.py --project <ID>
-   ..\.venv\Scripts\python.exe s1_stack.py --source gee --year 2024
-   ..\.venv\Scripts\python.exe s1_stack.py --source gee --year 2025
-   ..\.venv\Scripts\python.exe scene_analysis.py --gee
-   ..\.venv\Scripts\python.exe experiment_runner.py --source gee
-   ```
-2. Spot-check at least 20 validation points (`data/reference/validation_points_2025.csv`, column `team_check`; chips are in `outputs/reports/validation_chips_2025_*.png`).
-3. Fill in team names, department, university, e-mail and poster ID in the PPTX. Confirm the poster size with the organisers: the official template is A1 portrait (23.4×33.1 in), and our poster is 48×36 in landscape.
-4. Re-export the PDF after editing (`poster/export_pdf.ps1`) and check it at 100 % zoom before printing.
+1. Spot-check at least 20 validation points per reach:
+   - `data/reference/validation_points_2025.csv`;
+   - `data/reaches/sirajganj/reference/validation_points_2025.csv`;
+   - use the column `team_check`.
+2. Fill in the placeholders in the PPTX (team members, department, university). Then re-export with `poster/export_pdf.ps1` and check the PDF at 100 % zoom.
+3. Optional: rehearse the "no automatic gain / oracle review" answers in `presentation/judges_qa_results.md`.
 
 ## 5. What cannot be claimed
-- SAGE-River is better than the baseline in every respect.
+- That SAGE-River (v1 or v2) is a better automatic classifier than a tuned baseline.
+- That review gains hold for a real (non-oracle) analyst.
 - Field-validated accuracy.
-- Any forecast or future-erosion skill.
-- A PINN or physics model.
-- Earth Engine σ⁰ results.
-- Generalisation beyond one reach and one test monsoon.
-- That the 31 Jan dark patches are flooded paddies (not field-verified).
+- Generalisation beyond two reaches of one river.
+- Any forecasting skill, a PINN or a physics model.
+- That the 31 Jan dark patches are flooded paddies (consistent with that, but not field-verified).
+- That the Kurigram 2025 v2 numbers are held-out evidence (they are exploratory).

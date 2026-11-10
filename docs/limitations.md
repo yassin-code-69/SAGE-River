@@ -1,16 +1,36 @@
 # Limitations (state these honestly on the poster and in Q&A)
+*Updated 11 Nov 2026 for GEE σ⁰ as the primary source and for SAGE-River v2.*
 
-1. **One reach, one test monsoon.** 12 km of the Jamuna upstream of Chilmari (Kurigram), test monsoon 2025, validation monsoon 2024. Results may not transfer to other reaches, protected banks or years.
-2. **Reference is optical, not field truth.** Sentinel-2 NDVI/MNDWI classes have errors (mixed pixels at 10–20 m, crop calendar, residual cloud/haze, wet vs dry sand). Visual point checks were done by the AI analyst and must be spot-checked by the team.
-3. **Reach selection used optical change.** The AOI was chosen because Sentinel-2 showed visible 2025 outer-bank loss (required to have erosion to evaluate). SAR results were not used for selection, but the reach is not a random sample.
-4. **SAR source.** Earth Engine σ⁰ could not be used (no Cloud project ID during execution); Planetary Computer RTC γ⁰ was used instead. γ⁰ is ≈ 1 dB higher than σ⁰ on flat ground at 30–45°, so the published thresholds (−13.2/−12.7 dB, σ⁰) are not directly applicable — the 2024-calibrated thresholds are the primary baseline. The incidence-angle mask (30–45°) could not be applied because RTC has no angle band (the AOI lies well inside that range for R114 — to be confirmed with GEE).
-5. **Archive gaps in the fallback source.** PC RTC lacks 4 of 16 (2025 pre), 3 of 14 (2024 pre) and 2 of 8 (2024 post) ASF acquisitions; the 2024 calibration therefore covers k ≤ 6 and k = 8 uses the k = 6 parameters.
-6. **Overlapping subsets.** Experiment A uses all combinations of the same 8 scenes; SD/range describe subset variability, not independent confidence intervals.
-7. **Temporal mismatch.** The Feb–Mar reference is cumulative; early maps (8 Nov–2 Dec) cannot contain later falling-stage erosion. The as-of-mid-December reference only partially fixes this (Nov–Dec optical composites contain residual water).
-8. **Classifier simplicity.** One VV threshold separates vegetation from sand/water; trees vs fields, settlements and wet fields are not separated; no VH, no texture, no learning-based classifier.
-9. **Abstention is not probability.** The ±δ band is a selective-decision rule; it is not calibrated uncertainty.
-10. **Outer-bank domain is heuristic.** Row-wise westmost/eastmost channel edges + 1.5 km strip; char (island) erosion is excluded by design.
-11. **Not forecasting, not a PINN, no hydraulics.** The work maps past erosion and evaluates map reliability only.
-12. **Coverage did not fully transfer.** m and δ were selected on 2024 with a ≥ 90 % coverage rule; on 2025 SAGE A+G coverage was 87–88 % for k ≥ 3.
-13. **Fairness control added after run 1.** The F1-tuned baseline was added after inspecting only 2024 tables (run 1 archived in `outputs/reports/run1_without_F1tuned_baseline/`); all other rules are deterministic and identical across runs.
-14. **Anomalous-scene interpretation unverified.** The dark field-shaped patches on 31 Jan 2026 are consistent with temporarily flooded/irrigated fields, but this was not field-verified.
+1. **Few reaches and years.**
+   - Development reach: Kurigram (Jamuna upstream of Chilmari); validation monsoon 2024, test monsoon 2025.
+   - Independent reach: Sirajganj–Kazipur (2024 and 2025).
+   - Two reaches of one braided river are not evidence of generality for other rivers, protected banks or years.
+2. **Reference is optical, not field truth.**
+   - Sentinel-2 NDVI/MNDWI classes have errors: mixed pixels, crop calendar, residual haze, wet vs dry sand.
+   - The blind point checks were done by the AI analyst and must be spot-checked by the team.
+3. **Reach selection used optical change.** Both reaches were chosen because Sentinel-2 showed visible outer-bank loss, which is needed to have erosion to evaluate. SAR results were not used for selection.
+4. **SAR source.**
+   - GEE COPERNICUS/S1_GRD σ⁰ is primary. Observed incidence angles over Kurigram were 36.4–38.1°, inside the 30–45° mask.
+   - The Planetary Computer RTC γ⁰ runs are an *adapted* cross-check only. RTC is terrain-flattened γ⁰ (≈ 1 dB above σ⁰ at these angles), has no angle band and has archive gaps. It is not an exact reproduction of the GEE σ⁰ workflow.
+5. **Overlapping subsets.** Experiment A uses all combinations of the same 8 scenes. SD and range describe subset variability, not independent confidence intervals.
+6. **Temporal mismatch.** The Feb–Mar reference is cumulative, so early maps cannot contain later erosion. The as-of-mid-December reference only partly fixes this.
+7. **Classifier simplicity.** A single VV threshold rule; no VH, no texture, no learned pixel classifier.
+8. **Abstention is not probability.** The ±δ band is a selective-decision rule, not calibrated uncertainty. The v2 review ranking is a logistic score used only for ordering.
+9. **Outer-bank domain is heuristic.** Row-wise channel edges plus a 1.5 km strip; char (island) erosion is excluded by design.
+10. **Not forecasting, not a PINN, no hydraulics.**
+11. **Coverage did not fully transfer.** The ≥ 90 % coverage rule set on 2024 gave 88–91 % for v1 A+G in 2025.
+12. **Fairness control added after run 1.** The F1-tuned baseline was added after inspecting only 2024 tables. Run 1 is archived.
+13. **Anomalous-scene interpretation unverified.** The 31 Jan 2026 dark fields are consistent with temporary flooding (three independent sources) but were not field-verified.
+14. **The v2 reviewer is simulated as an oracle.** The review simulation assumes the analyst labels every reviewed pixel correctly. Real analysts make errors and need imagery, so the "v2 + review" F1 values are upper bounds. They are not comparable to no-review baselines.
+15. **Review burden.**
+    - REVIEW covers 184–1218 ha, against 12–60 ha of reference erosion.
+    - A 20 % budget means inspecting 37–244 ha, about 3–23 ha per ha recovered.
+16. **The independent primary test is weak.**
+    - Sirajganj 2025 has only 12.2 ha of reference erosion.
+    - The erosion-point check agreed for 10/15 decidable points (67 %); 15 of 30 points were undecidable.
+    - Criterion (a) passed at k = 2, 3, 6 by tiny margins and failed at k = 8.
+17. **Kurigram 2025 v2 results are exploratory.** The v2 idea was formed after inspecting them, so they are not held-out evidence.
+18. **v2 adds no automatic accuracy.**
+    - The high-confidence class equals v1 and is below the tuned baseline in every reach × k cell.
+    - Single-scene maps remain unreliable (31 Jan: 104 ha false erosion in v2 HC).
+    - Random review of v1 UNCERTAIN pixels nearly matched v2 at ≥ 20 % effort in Sirajganj 2024.

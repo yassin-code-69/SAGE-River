@@ -1,30 +1,115 @@
-# Judges' Q&A — results-specific answers (2025 test monsoon, parameters frozen on 2024)
+# Judges' Q&A — results-specific answers
+*Updated 11 Nov 2026. Primary SAR source is GEE COPERNICUS/S1_GRD σ⁰.*
 
-Sources: `outputs/tables/experiment_A_summary_pc.csv`, `experiment_B_chronological_pc.csv`, `experiment_A_all_subsets_pc.csv`, `selected_parameters_pc.json`, `reference_point_agreement_2025.csv`, `filter_sensitivity_2025_circle7_vs_square7.csv`.
+**Sources:**
+- `outputs/tables/experiment_A_summary_gee.csv`, `experiment_A_all_subsets_gee.csv`, `experiment_B_chronological_gee.csv`, `selected_parameters_gee.json`;
+- `v2_preregistered_criteria.csv`, `v2_ablation_all_reaches.csv`, `v2_review_summary_*.csv`;
+- `audit_20260131_*.csv`;
+- the Sirajganj tables in `outputs/reaches/sirajganj/tables/`.
 
+## Scene budget and v1
 **Q: So how many scenes are enough?**
-With the published rule, 2–3 scenes. Mean F1 went from 0.70 (1 scene) to 0.77 (3 scenes) and then stayed at 0.77 up to 8 scenes; false erosion fell from 22 ha to 2 ha. Single-scene maps were unreliable: their F1 ranged from 0.30 to 0.77 depending on which scene you happened to use. The 2024-tuned baseline kept improving slowly (0.67 → 0.80 from 1 to 8 scenes).
+For a usable map, 2–3. With the published thresholds on Kurigram 2025:
 
-**Q: Did SAGE-River beat the baseline?**
-On the pixels it decides — yes: F1 0.86–0.90, precision 0.94–0.98, false erosion ≤ 2.4 ha, versus 0.73–0.80 for the best baseline. But it leaves 9–13 % of the outer-bank strip UNCERTAIN, and 23–36 % of the true erosion area lies in those uncertain pixels (mostly bank edges). If we count UNCERTAIN as "no erosion", SAGE scores 0.66–0.77 — not consistently better than the tuned baseline (0.73–0.80). So it is a *reliability* tool: what it says is very trustworthy, and it tells you where to look again; it does not find more erosion.
+| Scenes (k) | Mean F1 | False erosion |
+|---|---|---|
+| 1 | 0.56 | 74 ha |
+| 3 | 0.71 | 24 ha |
+| 8 | 0.82 | 7.5 ha |
 
-**Q: Then what is the value of agreement?**
-Robustness to a bad scene. On 31 January 2026 one acquisition showed dark, field-shaped patches on the west floodplain (consistent with temporarily flooded or irrigated fields — not field-verified). Used alone, the tuned baseline mapped 197 ha of false erosion from it (150 ha with the published thresholds). In 2-scene maps containing that date, the tuned baseline still had 36 ha of false erosion on average, while SAGE A+G stayed at about 1 ha.
+The 2024-tuned baseline reached 0.70, 0.79 and 0.82. Single scenes are risky: depending on the date, the tuned baseline's F1 ranged from 0.30 to 0.80.
+
+**Q: Did SAGE-River v1 beat the baseline?**
+- **On decided pixels: yes.** F1 0.85–0.90 with less than 3 ha of false erosion.
+- **But it abstains.** Coverage was 88–91 %, and 14–21 ha of the 58.8 ha of real erosion fell into UNCERTAIN, mostly at bank edges.
+- **Counting UNCERTAIN as "no erosion":** F1 is 0.66–0.77, never above the tuned baseline (0.76–0.82). The same held on the independent Sirajganj reach.
+- So v1 is a reliability tool, not a better detector.
+
+**Q: Why are the published thresholds now so close to your tuned ones?**
+Because we now use the same data type as the paper (Earth Engine σ⁰). The 2024-tuned thresholds came out at −13.15 / −13.25 dB for k = 3 and −12.65 / −12.7 dB for k ≥ 6, against the published −13.2 / −12.7 dB. Earlier Planetary Computer γ⁰ runs needed thresholds about 1 dB higher. That is why they are only an adapted cross-check.
 
 **Q: Why is "Baseline (calibrated)" so bad?**
-Its thresholds were chosen to separate vegetation from sand/water over the whole reach (Youden's J). That is not the same objective as detecting the vegetated→sand change on the bank, and it gave F1 0.35–0.42 with > 100 ha false erosion. It shows that threshold choice matters more than anything else. That is why we added a fair control: a baseline whose thresholds were tuned on 2024 erosion F1, just like SAGE's m and δ.
+Its thresholds separate vegetation from sand/water over the whole reach (Youden's J). That is a different objective from detecting bank loss, and it gives F1 0.35–0.46 with more than 100 ha of false erosion. Threshold choice matters more than anything else, which is why the F1-tuned baseline is our fair control.
 
-**Q: You used γ⁰ RTC data but published σ⁰ thresholds — is that valid?**
-The published thresholds (−13.2/−12.7 dB) were derived for Earth Engine σ⁰. γ⁰ is roughly 1 dB higher on flat ground, so we treat them as indicative only. Interestingly, the thresholds tuned on 2024 (−11.5 dB pre; −12.2 to −11.4 dB post) are close to the published values plus ~1 dB. Earth Engine σ⁰ re-runs are scripted and pending a project ID.
+## The bad scene (31 Jan 2026)
+**Q: Was the bad scene a bug in your code?**
+No. We audited it before changing any algorithm.
+- **Implementation checks, all clean:**
+  - NoData: none;
+  - alignment: phase-correlation shift 0 px;
+  - scene-wide radiometry: normal;
+  - mosaicking: one item;
+  - thresholds: identical to the other scenes.
+- **What the dark patches are:** temporarily inundated fields, a median 584 m from the channel. Three independent sources agree:
+  - GEE σ⁰: −15.0 dB, against −8.2 dB on control fields;
+  - the R150 descending scene two days later is also dark;
+  - Sentinel-2 shows 88–99 % open water from 28 Jan to 12 Feb.
+- This fits flooding for boro rice, but it is not field-verified. We kept the scene in every experiment.
 
+**Q: What did the bad scene do to the maps?**
+
+| Map | False erosion |
+|---|---|
+| Alone, published thresholds | 265 ha |
+| Alone, tuned thresholds | 160 ha |
+| 2-scene maps containing it, tuned baseline | 12.1 ha |
+| 2-scene maps containing it, A+G | 1.6 ha |
+
+Temporal agreement is what protects you. A single-scene map cannot, and v2 does not fix that either: its single-scene high-confidence map still has 104 ha of false erosion.
+
+## SAGE-River v2
+**Q: What is v2?**
+- **Three classes:**
+  - HIGH-CONFIDENCE erosion: v1 confident pixels in patches touching the SAR-derived bank;
+  - POSSIBLE EROSION — REVIEW: candidates within 100 m of the bank;
+  - LIKELY STABLE.
+- **Ranking:** REVIEW patches are ranked by a logistic model trained on 2024. It uses only map-date SAR features: change magnitude, vote fraction, pre margin, distance to the bank, area, bank contact and v1 fraction. The later Sentinel-2 reference is never an input.
+
+**Q: Is v2 more accurate than the baseline?**
+Not automatically. Its high-confidence class has the same F1 as v1 and is below the tuned baseline in every reach and scene budget. v2's value is in **where to send a limited review**.
+
+**Q: Show me the review result.**
+At 20 % review effort, k = 3:
+
+| Evaluation | v2 prioritized | Random review (mean) |
+|---|---|---|
+| Kurigram 2025 (exploratory) | 21.3 ha | 5.5 ha |
+| Sirajganj 2025 (independent) | 7.2 ha | 2.1 ha |
+| Sirajganj 2024 (Kurigram parameters) | 19.7 ha | 8.0 ha |
+
+Across the 12 independent tests, both pre-registered criteria were met in 11. The failure is the primary local test at k = 8, where prioritized equals the random 95th percentile (10.82 ha). Several margins are tiny.
+
+**Q: Isn't 0.92 F1 after review cheating?**
+It would be if we compared it with no-review baselines, and we don't. The simulated reviewer is an *oracle* that labels every reviewed pixel correctly, so the numbers are an upper bound. They measure how well the ranking directs effort, not map accuracy. We report effort in hectares: a 20 % budget is 37–244 ha of inspection.
+
+**Q: Couldn't you just review v1's UNCERTAIN pixels?**
+We tested exactly that (random order, same hectares):
+- In Kurigram and Sirajganj 2025, v2 recovers 2.3–4.9 times more.
+- In the Sirajganj 2024 transfer, the gap closes by 20 % effort (k = 3: 19.7 vs 16.8 ha; k = 8: 14.9 vs 15.2 ha, slightly in v1's favour).
+- v2's ranking helps most at small budgets (5–10 %).
+
+**Q: Did you tune v2 on the test data?**
+No.
+- **Frozen in advance:** the design was written at 02:58 and the code frozen at 03:12:45, with md5 checksums. The transfer addendum was written at 03:30:51.
+- **Independent data:** the Sirajganj SAR was downloaded at 03:36–03:40, after the freeze. Our final audit re-verifies the checksums and this order.
+- **Exploratory part:** the v2 idea came from inspecting Kurigram 2025. That is why we label Kurigram 2025 v2 results "exploratory" and use Sirajganj as the independent test.
+
+**Q: How good is the Sirajganj reference?**
+Weak, and we say so.
+- **Size:** only 12.2 ha of erosion in 2025.
+- **Point check:** 10/15 = 67 % of decidable erosion points agreed (15 of 30 were undecidable); non-erosion agreed 27/29 = 93 %.
+- **Response:** before seeing any results, we added a transfer test on Sirajganj 2024 (59.9 ha) using Kurigram parameters.
+
+## Other checks
 **Q: Early mapping — when can you publish a map?**
-Maps possible on 8 Nov, 20 Nov and 2 Dec 2025 reached F1 0.73, 0.75 and 0.78 (tuned baseline). 95 % of the reference erosion was already visible in optical images by mid-December, so late-season erosion did not distort the comparison much.
+Maps possible on 8 Nov, 20 Nov and 2 Dec 2025 reached F1 0.73, 0.76 and 0.79 (tuned baseline). Against an "as-of mid-December" reference they reached 0.75–0.82.
 
-**Q: How good is your reference?**
-On 120 stratified points interpreted visually (blind to the automatic label): 36 of 39 decidable reference-erosion points were truly eroded (92 %), and 47 of 47 non-erosion points near the bank were not eroded (100 %). The points were interpreted by the AI analyst. The team must spot-check at least 20 before presenting.
+**Q: How good is your reference (Kurigram)?**
+On 120 stratified points, interpreted blind to the label:
+- 36/39 decidable erosion points were truly eroded (92 %);
+- 47/47 near-bank non-erosion points were correct (100 %).
+
+The points were interpreted by the AI analyst; the team must spot-check at least 20.
 
 **Q: Does the filter matter (circle vs 7×7)?**
-The paper text says "7×7 boxcar", but the released code uses a radius-7 circle. Using the paper's 7×7 square changed F1 by −0.02 to +0.08 depending on the rule (mostly a small gain). The ranking of the rules did not change.
-
-**Q: Did the 2024 settings transfer to 2025?**
-Mostly yes. The one exception is coverage: m and δ were chosen to keep ≥ 90 % coverage in 2024, but coverage fell to 87–88 % in 2025 for k ≥ 3. That is exactly why coverage must be reported with every result.
+In the Planetary Computer cross-check, the paper's 7×7 square changed F1 by −0.02 to +0.08 and did not change the ranking of the rules. The primary GEE runs use the released code's radius-7 circle.
