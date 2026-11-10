@@ -1,0 +1,51 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "Jamuna reach near Kazipur, Sirajganj (12 km) \u2014 independent evaluation reach",
+    "crs_analysis": "EPSG:32645",
+    "bounds_utm": [
+     760000.0,
+     2728000.0,
+     788000.0,
+     2740000.0
+    ],
+    "width_km": 28.0,
+    "height_km": 12.0,
+    "rationale": "Second reach for independent evaluation of SAGE-River v2, chosen by the same Sentinel-2 Feb-Mar 2025 vs 2026 reconnaissance (channel-connected outer-bank loss ~65 ha at 30 m); its Sentinel-1 data had not been used when the v2 design was frozen.",
+    "recon_box": "sirajganj",
+    "centre_lon": 89.70801,
+    "centre_lat": 24.69606
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       89.568649,
+       24.644356
+      ],
+      [
+       89.845018,
+       24.639376
+      ],
+      [
+       89.847479,
+       24.747619
+      ],
+      [
+       89.570872,
+       24.752624
+      ],
+      [
+       89.568649,
+       24.644356
+      ]
+     ]
+    ]
+   }
+  }
+ ]
+}

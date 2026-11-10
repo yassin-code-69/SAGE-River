@@ -6,3 +6,9 @@ data/cache/
 .config/
 *credentials*
 data/metadata/gee_project.json
+
+# independent-evaluation reaches (SAGE_REACH): same rules as the development reach
+data/reaches/*/cache/
+data/reaches/*/metadata/gee_project.json
+# Sentinel-2 reference rasters of extra reaches exceed GitHub's 100 MB file limit; rebuild with reference_validation.py
+data/reaches/*/reference/*.npz

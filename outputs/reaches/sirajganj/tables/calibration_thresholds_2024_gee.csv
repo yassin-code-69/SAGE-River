@@ -1,0 +1,7 @@
+quantity,k,threshold_db,youden_J,n_veg,n_sandwater
+T_pre (pre composite),all-pre,-11.55,0.8678487347850548,2424388,806804
+T_post (k-scene composite),1,-11.55,0.8481854166666667,480000,480000
+T_post (k-scene composite),2,-11.4,0.8776988095238095,1680000,1680000
+T_post (k-scene composite),3,-11.35,0.887453869047619,3360000,3360000
+T_post (k-scene composite),6,-11.3,0.8960404761904762,1680000,1680000
+T_post (k-scene composite),8,-11.25,0.8979,60000,60000

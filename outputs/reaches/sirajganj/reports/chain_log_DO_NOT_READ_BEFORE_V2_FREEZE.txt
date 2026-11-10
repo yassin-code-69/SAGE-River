@@ -1,0 +1,97 @@
+2025 {'domain_px': 360000, 'ref_erosion_px': 1220, 'ref_nonerosion_px': 319523, 'ref_uncertain_in_domain_px': 39257}
+2024 {'domain_px': 360000, 'ref_erosion_px': 5993, 'ref_nonerosion_px': 327281, 'ref_uncertain_in_domain_px': 26726}
+Traceback (most recent call last):
+  File "D:\Program Work\Project in Vibe Coding\BUBT_PP_P\SAGE-River\python\scene_analysis.py", line 207, in <module>
+    main(use_gee="--gee" in sys.argv)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Program Work\Project in Vibe Coding\BUBT_PP_P\SAGE-River\python\scene_analysis.py", line 169, in main
+    frames.append(inv_gee())
+                  ~~~~~~~^^
+  File "D:\Program Work\Project in Vibe Coding\BUBT_PP_P\SAGE-River\python\scene_analysis.py", line 45, in inv_gee
+    proj = json.loads((C.DATA / "metadata" / "gee_project.json").read_text())["project"]
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Python314\Lib\pathlib\__init__.py", line 787, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\pathlib\__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\Program Work\\Project in Vibe Coding\\BUBT_PP_P\\SAGE-River\\data\\reaches\\sirajganj\\metadata\\gee_project.json'
+[gee] 2025 pre 2024-11-01..2025-05-01
+Traceback (most recent call last):
+  File "D:\Program Work\Project in Vibe Coding\BUBT_PP_P\SAGE-River\python\s1_stack.py", line 198, in <module>
+    build(a.source, a.year, a.filter)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Program Work\Project in Vibe Coding\BUBT_PP_P\SAGE-River\python\s1_stack.py", line 177, in build
+    arr, ang, meta = gee_stack(s, e, kname)
+                     ~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Program Work\Project in Vibe Coding\BUBT_PP_P\SAGE-River\python\s1_stack.py", line 75, in gee_stack
+    ee = gee_init()
+  File "D:\Program Work\Project in Vibe Coding\BUBT_PP_P\SAGE-River\python\s1_stack.py", line 57, in gee_init
+    proj = json.loads((C.DATA / "metadata" / "gee_project.json").read_text())["project"]
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Python314\Lib\pathlib\__init__.py", line 787, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\pathlib\__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\Program Work\\Project in Vibe Coding\\BUBT_PP_P\\SAGE-River\\data\\reaches\\sirajganj\\metadata\\gee_project.json'
+[gee] 2024 pre 2023-11-01..2024-05-01
+Traceback (most recent call last):
+  File "D:\Program Work\Project in Vibe Coding\BUBT_PP_P\SAGE-River\python\s1_stack.py", line 198, in <module>
+    build(a.source, a.year, a.filter)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Program Work\Project in Vibe Coding\BUBT_PP_P\SAGE-River\python\s1_stack.py", line 177, in build
+    arr, ang, meta = gee_stack(s, e, kname)
+                     ~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Program Work\Project in Vibe Coding\BUBT_PP_P\SAGE-River\python\s1_stack.py", line 75, in gee_stack
+    ee = gee_init()
+  File "D:\Program Work\Project in Vibe Coding\BUBT_PP_P\SAGE-River\python\s1_stack.py", line 57, in gee_init
+    proj = json.loads((C.DATA / "metadata" / "gee_project.json").read_text())["project"]
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Python314\Lib\pathlib\__init__.py", line 787, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\pathlib\__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\Program Work\\Project in Vibe Coding\\BUBT_PP_P\\SAGE-River\\data\\reaches\\sirajganj\\metadata\\gee_project.json'
+Traceback (most recent call last):
+  File "D:\Program Work\Project in Vibe Coding\BUBT_PP_P\SAGE-River\python\experiment_runner.py", line 326, in <module>
+    main(a.source, a.filter)
+    ~~~~^^^^^^^^^^^^^^^^^^^^
+  File "D:\Program Work\Project in Vibe Coding\BUBT_PP_P\SAGE-River\python\experiment_runner.py", line 285, in main
+    Vfull = load(source, 2024, suffix)
+  File "D:\Program Work\Project in Vibe Coding\BUBT_PP_P\SAGE-River\python\experiment_runner.py", line 29, in load
+    s1 = np.load(C.CACHE / f"s1_{source}_{year}{suffix}.npz")
+  File "D:\Program Work\Project in Vibe Coding\BUBT_PP_P\SAGE-River\.venv\Lib\site-packages\numpy\lib\_npyio_impl.py", line 454, in load
+    fid = stack.enter_context(open(os.fspath(file), "rb"))
+                              ~~~~^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\Program Work\\Project in Vibe Coding\\BUBT_PP_P\\SAGE-River\\data\\reaches\\sirajganj\\cache\\s1_gee_2024.npz'
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import experiment_runner as E; E.resummarise('gee')
+                                   ~~~~~~~~~~~~~^^^^^^^
+  File "D:\Program Work\Project in Vibe Coding\BUBT_PP_P\SAGE-River\python\experiment_runner.py", line 273, in resummarise
+    A = pd.read_csv(C.TABLES / f"experiment_A_all_subsets_{tag}.csv")
+  File "D:\Program Work\Project in Vibe Coding\BUBT_PP_P\SAGE-River\.venv\Lib\site-packages\pandas\io\parsers\readers.py", line 1866, in read_csv
+    return _read(filepath_or_buffer, kwds)
+  File "D:\Program Work\Project in Vibe Coding\BUBT_PP_P\SAGE-River\.venv\Lib\site-packages\pandas\io\parsers\readers.py", line 423, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+  File "D:\Program Work\Project in Vibe Coding\BUBT_PP_P\SAGE-River\.venv\Lib\site-packages\pandas\io\parsers\readers.py", line 2721, in __init__
+    self._engine = self._make_engine(f, self.engine)
+                   ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "D:\Program Work\Project in Vibe Coding\BUBT_PP_P\SAGE-River\.venv\Lib\site-packages\pandas\io\parsers\readers.py", line 2988, in _make_engine
+    self.handles = get_handle(
+                   ~~~~~~~~~~^
+        f,
+        ^^
+    ...<6 lines>...
+        storage_options=self.options.get("storage_options", None),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\Program Work\Project in Vibe Coding\BUBT_PP_P\SAGE-River\.venv\Lib\site-packages\pandas\io\common.py", line 954, in get_handle
+    handle = open(handle, ioargs.mode)
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\Program Work\\Project in Vibe Coding\\BUBT_PP_P\\SAGE-River\\outputs\\reaches\\sirajganj\\tables\\experiment_A_all_subsets_gee.csv'

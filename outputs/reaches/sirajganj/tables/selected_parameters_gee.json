@@ -1,0 +1,68 @@
+{
+ "source": "gee",
+ "filter": "circle7",
+ "thresholds": {
+  "T_pre": -11.55,
+  "T_post": {
+   "1": -11.55,
+   "2": -11.4,
+   "3": -11.35,
+   "6": -11.3,
+   "8": -11.25
+  },
+  "T_scene": -11.55
+ },
+ "published": {
+  "T_pre": -13.2,
+  "T_post": -12.7
+ },
+ "params_by_k": {
+  "1": {
+   "delta_G": 1.0,
+   "m_AG": null,
+   "m_rule": null,
+   "delta_AG": 0.0,
+   "T_pre_F1tuned": -12.55,
+   "T_post_F1tuned": -13.05,
+   "calibrated_on_k": 1
+  },
+  "2": {
+   "delta_G": 1.0,
+   "m_AG": 2,
+   "m_rule": "majority",
+   "delta_AG": 1.5,
+   "T_pre_F1tuned": -12.55,
+   "T_post_F1tuned": -12.4,
+   "calibrated_on_k": 2
+  },
+  "3": {
+   "delta_G": 1.0,
+   "m_AG": 2,
+   "m_rule": "majority",
+   "delta_AG": 1.0,
+   "T_pre_F1tuned": -12.55,
+   "T_post_F1tuned": -12.35,
+   "calibrated_on_k": 3
+  },
+  "6": {
+   "delta_G": 1.0,
+   "m_AG": 4,
+   "m_rule": "majority",
+   "delta_AG": 1.5,
+   "T_pre_F1tuned": -12.55,
+   "T_post_F1tuned": -12.3,
+   "calibrated_on_k": 6
+  },
+  "8": {
+   "delta_G": 1.0,
+   "m_AG": 5,
+   "m_rule": "majority",
+   "delta_AG": 1.5,
+   "T_pre_F1tuned": -12.05,
+   "T_post_F1tuned": -12.25,
+   "calibrated_on_k": 8
+  }
+ },
+ "selection_rule": "max mean F1 (decided px) s.t. mean coverage >= 0.9 on 2024",
+ "frozen_at": "2026-11-11T03:44:25"
+}

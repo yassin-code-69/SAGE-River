@@ -27,6 +27,49 @@ FORBIDDEN = [r"\bfirst\b(?! (1|2|3|three|two|scene|k|acquisition))", r"ground tr
              r"\bpredict(s|ion|ed)? (future|next)", r"\bforecast(ing)? (system|model) (we|our)", r"world'?s first", r"novel framework"]
 
 
+def v2_checks(ok):
+    """SAGE-River v2: frozen-code checksums, freeze-before-data order, criteria consistency."""
+    import hashlib
+    md5f = C.ROOT / "docs" / "sage_river_v2_design.md5"
+    ok(md5f.exists(), "exists: docs/sage_river_v2_design.md5")
+    if not md5f.exists():
+        return
+    last = {}
+    for line in md5f.read_text(encoding="utf-8").splitlines():
+        m = re.match(r"^([0-9a-f]{32}) \*(.+)$", line.strip())
+        if m:
+            last[m.group(2)] = m.group(1)  # the latest recorded checksum per file
+    for rel, h in last.items():
+        f = C.ROOT / rel
+        cur = hashlib.md5(f.read_bytes()).hexdigest() if f.exists() else None
+        ok(cur == h, f"v2 frozen file unchanged since freeze: {rel} ({h[:8]})")
+    freeze = "2026-11-11T03:12:45"  # code-freeze time recorded in sage_river_v2_design.md5
+    sj = C.ROOT / "data" / "reaches" / "sirajganj" / "cache"
+    for y in (2024, 2025):
+        mf = sj / f"s1_gee_{y}.json"
+        if mf.exists():
+            created = json.loads(mf.read_text())["created"]
+            ok(created > freeze, f"Sirajganj SAR {y} created {created} after v2 code freeze {freeze}")
+        else:
+            ok(False, f"Sirajganj SAR {y} metadata present")
+    cal = json.loads((C.TABLES / "v2_calibration_gee.json").read_text())
+    ok(cal.get("train_year") == 2024, "v2 ranking model trained on 2024 only")
+    cr = C.TABLES / "v2_preregistered_criteria.csv"
+    ok(cr.exists(), "exists: outputs/tables/v2_preregistered_criteria.csv")
+    if cr.exists():
+        c = pd.read_csv(cr)
+        a_re = (c.recovered_prioritized_ha > c.recovered_random_mean_ha) & (c.recovered_prioritized_ha > c.random_p95_ha)
+        b_re = c.hc_false_ha <= c.v1_false_ha + 1e-9
+        ok(bool((a_re == c.crit_a_met).all() and (b_re == c.crit_b_met).all()), "v2 criteria flags recomputed from their own columns")
+        ind = c[c.role.str.startswith("INDEPENDENT")]
+        ok(True, f"v2 independent tests with both criteria met: {int(ind.both_met.sum())}/{len(ind)} (informational)", is_hard=False)
+    for rel in ("outputs/figures/figure_H_poster.png", "outputs/figures/figure_G_v2_ablation.png",
+                "outputs/figures/figure_I_three_class_map.png", "docs/sage_river_v2_results.md",
+                "outputs/reports/root_cause_audit_20260131.md", "outputs/tables/v2_ablation_all_reaches.csv"):
+        f = C.ROOT / rel
+        ok(f.exists() and f.stat().st_size > 0, f"exists: {rel}")
+
+
 def main(source):
     rep, hard = [], []
 
@@ -79,6 +122,9 @@ def main(source):
         pred = M.baseline(pre, s1["post"][comb], T["T_pre"], T["T_post"][str(int(r.k))])
         e = evaluate(pred, ref["ref"], ref["domain"])
         ok(e["TP"] == r.TP and e["FP"] == r.FP and e["FN"] == r.FN, f"recomputed BASE_calibrated k={int(r.k)} subset {r.subset}")
+
+    if source == "gee":
+        v2_checks(ok)
 
     # poster text scan
     md = (C.ROOT / "poster" / "poster_content_en.md")

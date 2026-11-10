@@ -1,0 +1,148 @@
+D:\Program Work\Project in Vibe Coding\BUBT_PP_P\SAGE-River\python\scene_analysis.py:56: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+  t = datetime.utcfromtimestamp(vals["system:time_start"][i] / 1000)
+  source_1 source_2  n_1  n_2  common  only_1  only_2                                                                                                                                                                                                                                  only_1_examples                                                                                                                                                                                                                                  only_2_examples
+0      ASF      GEE  594  627     592       2      35                                                                                                                                                                                                                  2021-11-05/R114;2023-10-14/R114  2014-10-25/R114;2014-11-18/R114;2014-12-12/R114;2015-01-05/R114;2015-01-29/R114;2015-02-22/R114;2015-03-18/R114;2015-04-11/R114;2015-05-05/R114;2015-05-29/R114;2015-06-22/R114;2015-07-16/R114;2015-08-09/R114;2015-09-02/R114;2015-09-14/R114
+1      ASF   PC_RTC  594  607     572      22      35  2017-09-03/R114;2018-05-01/R114;2018-10-04/R114;2019-02-03/R150;2020-12-30/R150;2021-02-04/R150;2021-04-05/R150;2022-07-29/R150;2023-06-30/R150;2023-12-01/R114;2024-02-11/R114;2024-05-19/R150;2024-05-31/R150;2024-10-10/R150;2024-11-01/R114  2014-10-25/R114;2014-11-18/R114;2014-12-12/R114;2015-01-05/R114;2015-01-29/R114;2015-02-22/R114;2015-03-18/R114;2015-04-11/R114;2015-05-05/R114;2015-05-29/R114;2015-06-22/R114;2015-07-16/R114;2015-08-09/R114;2015-09-02/R114;2015-09-14/R114
+2      GEE   PC_RTC  627  607     605      22       2  2017-09-03/R114;2018-05-01/R114;2018-10-04/R114;2019-02-03/R150;2020-12-30/R150;2021-02-04/R150;2021-04-05/R150;2022-07-29/R150;2023-06-30/R150;2023-12-01/R114;2024-02-11/R114;2024-05-19/R150;2024-05-31/R150;2024-10-10/R150;2024-11-01/R114                                                                                                                                                                                                                  2021-11-05/R114;2023-10-14/R114
+   source     season     orbit  Nov  Nov-Dec  Nov-Jan  Nov-Apr
+0     GEE  2014/2015  R114 ASC    1        2        4        7
+1     GEE  2015/2016  R114 ASC    1        3        3        7
+2     GEE  2016/2017  R114 ASC    1        3        4       11
+3     GEE  2017/2018  R114 ASC    3        5        8       15
+4     GEE  2018/2019  R114 ASC    2        5        7       15
+5     GEE  2019/2020  R114 ASC    3        5        8       15
+6     GEE  2020/2021  R114 ASC    2        5        7       15
+7     GEE  2021/2022  R114 ASC    2        4        7       14
+8     GEE  2022/2023  R114 ASC    2        5        7       15
+9     GEE  2023/2024  R114 ASC    2        5        8       14
+10    GEE  2024/2025  R114 ASC    3        6        8       16
+11    GEE  2025/2026  R114 ASC    2        5        8       14
+[gee] 2025 pre 2024-11-01..2025-05-01
+D:\Program Work\Project in Vibe Coding\BUBT_PP_P\SAGE-River\python\s1_stack.py:86: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+  d = datetime.utcfromtimestamp(t / 1000).date().isoformat()
+  GEE 2024-11-01 ['S1A_IW_GRDH_1SDV_20241101T120508_20241101T120533_056361_06E791_BF8C'] valid frac 1.000
+  GEE 2024-11-13 ['S1A_IW_GRDH_1SDV_20241113T120508_20241113T120533_056536_06EE88_52AF'] valid frac 1.000
+  GEE 2024-11-25 ['S1A_IW_GRDH_1SDV_20241125T120507_20241125T120532_056711_06F586_524C'] valid frac 1.000
+  GEE 2024-12-07 ['S1A_IW_GRDH_1SDV_20241207T120506_20241207T120531_056886_06FC64_90AE'] valid frac 1.000
+  GEE 2024-12-19 ['S1A_IW_GRDH_1SDV_20241219T120505_20241219T120530_057061_070367_BFEE'] valid frac 1.000
+  GEE 2024-12-31 ['S1A_IW_GRDH_1SDV_20241231T120504_20241231T120529_057236_070A4E_29B6'] valid frac 1.000
+  GEE 2025-01-12 ['S1A_IW_GRDH_1SDV_20250112T120503_20250112T120528_057411_071139_E7C8'] valid frac 1.000
+  GEE 2025-01-24 ['S1A_IW_GRDH_1SDV_20250124T120502_20250124T120527_057586_07182D_A7FB'] valid frac 1.000
+  GEE 2025-02-05 ['S1A_IW_GRDH_1SDV_20250205T120501_20250205T120526_057761_071F13_FE4E'] valid frac 1.000
+  GEE 2025-02-17 ['S1A_IW_GRDH_1SDV_20250217T120501_20250217T120526_057936_072620_10ED'] valid frac 1.000
+  GEE 2025-03-01 ['S1A_IW_GRDH_1SDV_20250301T120501_20250301T120526_058111_072D3D_DA3F'] valid frac 1.000
+  GEE 2025-03-13 ['S1A_IW_GRDH_1SDV_20250313T120501_20250313T120526_058286_073457_B9FA'] valid frac 1.000
+  GEE 2025-03-25 ['S1A_IW_GRDH_1SDV_20250325T120501_20250325T120526_058461_073B3A_EFF1'] valid frac 1.000
+  GEE 2025-04-06 ['S1A_IW_GRDH_1SDV_20250406T120501_20250406T120526_058636_07425E_F7DA'] valid frac 1.000
+  GEE 2025-04-18 ['S1A_IW_GRDH_1SDV_20250418T120501_20250418T120526_058811_074987_8056'] valid frac 1.000
+  GEE 2025-04-30 ['S1A_IW_GRDH_1SDV_20250430T120459_20250430T120524_058986_0750A9_CBB0'] valid frac 1.000
+[gee] 2025 post_pool 2025-11-01..2026-02-01
+D:\Program Work\Project in Vibe Coding\BUBT_PP_P\SAGE-River\python\s1_stack.py:86: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+  d = datetime.utcfromtimestamp(t / 1000).date().isoformat()
+  GEE 2025-11-08 ['S1A_IW_GRDH_1SDV_20251108T120458_20251108T120523_061786_07B915_0B67'] valid frac 1.000
+  GEE 2025-11-20 ['S1A_IW_GRDH_1SDV_20251120T120458_20251120T120523_061961_07BFE0_1B92'] valid frac 1.000
+  GEE 2025-12-02 ['S1A_IW_GRDH_1SDV_20251202T120456_20251202T120521_062136_07C6B4_BFC5'] valid frac 1.000
+  GEE 2025-12-14 ['S1A_IW_GRDH_1SDV_20251214T120455_20251214T120520_062311_07CD8C_1D42'] valid frac 1.000
+  GEE 2025-12-26 ['S1A_IW_GRDH_1SDV_20251226T120454_20251226T120519_062486_07D45A_5271'] valid frac 1.000
+  GEE 2026-01-07 ['S1A_IW_GRDH_1SDV_20260107T120453_20260107T120518_062661_07DB1B_D57A'] valid frac 1.000
+  GEE 2026-01-19 ['S1A_IW_GRDH_1SDV_20260119T120452_20260119T120517_062836_07E1D9_27DD'] valid frac 1.000
+  GEE 2026-01-31 ['S1A_IW_GRDH_1SDV_20260131T120451_20260131T120516_063011_07E81A_3A8A'] valid frac 1.000
+saved s1_gee_2025
+[gee] 2024 pre 2023-11-01..2024-05-01
+D:\Program Work\Project in Vibe Coding\BUBT_PP_P\SAGE-River\python\s1_stack.py:86: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+  d = datetime.utcfromtimestamp(t / 1000).date().isoformat()
+  GEE 2023-11-07 ['S1A_IW_GRDH_1SDV_20231107T120511_20231107T120536_051111_0629F3_5EC6'] valid frac 1.000
+  GEE 2023-11-19 ['S1A_IW_GRDH_1SDV_20231119T120511_20231119T120536_051286_063002_0D85'] valid frac 1.000
+  GEE 2023-12-01 ['S1A_IW_GRDH_1SDV_20231201T120511_20231201T120536_051461_0635FC_1975'] valid frac 1.000
+  GEE 2023-12-13 ['S1A_IW_GRDH_1SDV_20231213T120510_20231213T120535_051636_063C28_891B'] valid frac 1.000
+  GEE 2023-12-25 ['S1A_IW_GRDH_1SDV_20231225T120509_20231225T120534_051811_06422C_BCEB'] valid frac 1.000
+  GEE 2024-01-06 ['S1A_IW_GRDH_1SDV_20240106T120509_20240106T120534_051986_064829_11EA'] valid frac 1.000
+  GEE 2024-01-18 ['S1A_IW_GRDH_1SDV_20240118T120508_20240118T120533_052161_064E18_4C2A'] valid frac 1.000
+  GEE 2024-01-30 ['S1A_IW_GRDH_1SDV_20240130T120508_20240130T120533_052336_065405_C4AB'] valid frac 1.000
+  GEE 2024-02-11 ['S1A_IW_GRDH_1SDV_20240211T120508_20240211T120533_052511_0659E9_9C80'] valid frac 1.000
+  GEE 2024-02-23 ['S1A_IW_GRDH_1SDV_20240223T120508_20240223T120533_052686_065FDC_0329'] valid frac 1.000
+  GEE 2024-03-06 ['S1A_IW_GRDH_1SDV_20240306T120508_20240306T120533_052861_0665CF_FDAD'] valid frac 1.000
+  GEE 2024-03-18 ['S1A_IW_GRDH_1SDV_20240318T120508_20240318T120533_053036_066C05_E482'] valid frac 1.000
+  GEE 2024-03-30 ['S1A_IW_GRDH_1SDV_20240330T120508_20240330T120533_053211_0672AD_2024'] valid frac 1.000
+  GEE 2024-04-23 ['S1A_IW_GRDH_1SDV_20240423T120509_20240423T120534_053561_068074_305F'] valid frac 1.000
+[gee] 2024 post_pool 2024-11-01..2025-02-01
+D:\Program Work\Project in Vibe Coding\BUBT_PP_P\SAGE-River\python\s1_stack.py:86: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+  d = datetime.utcfromtimestamp(t / 1000).date().isoformat()
+  GEE 2024-11-01 ['S1A_IW_GRDH_1SDV_20241101T120508_20241101T120533_056361_06E791_BF8C'] valid frac 1.000
+  GEE 2024-11-13 ['S1A_IW_GRDH_1SDV_20241113T120508_20241113T120533_056536_06EE88_52AF'] valid frac 1.000
+  GEE 2024-11-25 ['S1A_IW_GRDH_1SDV_20241125T120507_20241125T120532_056711_06F586_524C'] valid frac 1.000
+  GEE 2024-12-07 ['S1A_IW_GRDH_1SDV_20241207T120506_20241207T120531_056886_06FC64_90AE'] valid frac 1.000
+  GEE 2024-12-19 ['S1A_IW_GRDH_1SDV_20241219T120505_20241219T120530_057061_070367_BFEE'] valid frac 1.000
+  GEE 2024-12-31 ['S1A_IW_GRDH_1SDV_20241231T120504_20241231T120529_057236_070A4E_29B6'] valid frac 1.000
+  GEE 2025-01-12 ['S1A_IW_GRDH_1SDV_20250112T120503_20250112T120528_057411_071139_E7C8'] valid frac 1.000
+  GEE 2025-01-24 ['S1A_IW_GRDH_1SDV_20250124T120502_20250124T120527_057586_07182D_A7FB'] valid frac 1.000
+saved s1_gee_2024
+FROZEN parameters: {
+ "source": "gee",
+ "filter": "circle7",
+ "thresholds": {
+  "T_pre": -11.55,
+  "T_post": {
+   "1": -11.55,
+   "2": -11.4,
+   "3": -11.35,
+   "6": -11.3,
+   "8": -11.25
+  },
+  "T_scene": -11.55
+ },
+ "published": {
+  "T_pre": -13.2,
+  "T_post": -12.7
+ },
+ "params_by_k": {
+  "1": {
+   "delta_G": 1.0,
+   "m_AG": null,
+   "m_rule": null,
+   "delta_AG": 0.0,
+   "T_pre_F1tuned": -12.55,
+   "T_post_F1tuned": -13.05,
+   "calibrated_on_k": 1
+  },
+  "2": {
+   "delta_G": 1.0,
+   "m_AG": 2,
+   "m_rule": "majority",
+   "delta_AG": 1.5,
+   "T_pre_F1tuned": -12.55,
+   "T_post_F1tuned": -12.4,
+   "calibrated_on_k": 2
+  },
+  "3": {
+   "delta_G": 1.0,
+   "m_AG": 2,
+   "m_rule": "majority",
+   "delta_AG": 1.0,
+   "T_pre_F1tuned": -12.55,
+   "T_post_F1tuned": -12.35,
+   "calibrated_on_k": 3
+  },
+  "6": {
+   "delta_G": 1.0,
+   "m_AG": 4,
+   "m_rule": "majority",
+   "delta_AG": 1.5,
+   "T_pre_F1tuned": -12.55,
+   "T_post_F1tuned": -12.3,
+   "calibrated_on_k": 6
+  },
+  "8": {
+   "delta_G": 1.0,
+   "m_AG": 5,
+   "m_rule": "majority",
+   "delta_AG": 1.5,
+   "T_pre_F1tuned": -12.05,
+   "T_post_F1tuned": -12.25,
+   "calibrated_on_k": 8
+  }
+ },
+ "selection_rule": "max mean F1 (decided px) s.t. mean coverage >= 0.9 on 2024",
+ "frozen_at": "2026-11-11T03:44:25"
+}
+done
