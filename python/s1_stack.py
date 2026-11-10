@@ -91,28 +91,47 @@ def gee_stack(start, end, kname="circle7"):
                 "affineTransform": {"scaleX": grid.res, "shearX": 0, "translateX": xmin,
                                     "shearY": 0, "scaleY": -grid.res, "translateY": ymax},
                 "crsCode": grid.crs}
-    arrays, angles, meta = [], [], []
-    for d in dates:
-        d0 = date.fromisoformat(d)
-        img = col.filterDate(d, (d0 + timedelta(days=1)).isoformat()).mosaic()
+    if kname == "circle7":
+        k = ee.Kernel.circle(radius=7, units="pixels", normalize=True)   # released code
+    else:
+        k = ee.Kernel.square(radius=3, units="pixels", normalize=True)   # paper text: 7x7 boxcar
+
+    def per_image(img):
+        # F&F order: per-image angle mask (30-45 deg) -> toNatural -> convolve in the image's native 10 m grid -> toDB
         ang = img.select("angle")
         vv = img.select("VV").updateMask(ang.gt(C.FF["angle_min"])).updateMask(ang.lt(C.FF["angle_max"]))
-        lin = ee.Image(10.0).pow(vv.divide(10.0))  # toNatural
-        if kname == "circle7":
-            k = ee.Kernel.circle(radius=7, units="pixels", normalize=True)
-        else:
-            k = ee.Kernel.square(radius=3, units="pixels", normalize=True)  # 7x7 boxcar
-        filt = lin.convolve(k).log10().multiply(10.0).rename("VVf")
-        out = filt.addBands(ang.rename("angle")).toFloat().unmask(-9999)
-        arr = ee.data.computePixels({"expression": out, "fileFormat": "NUMPY_NDARRAY", "grid": req_grid})
+        filt = ee.Image(10.0).pow(vv.divide(10.0)).convolve(k).log10().multiply(10.0).rename("VVf")
+        return filt.addBands(ang.rename("angle"))
+
+    def one_day(d):
+        d0 = date.fromisoformat(d)
+        # slices of the same pass/day are filtered individually, then mosaicked so each acquisition counts once
+        out = col.filterDate(d, (d0 + timedelta(days=1)).isoformat()).map(per_image).mosaic().toFloat().unmask(-9999)
+        for attempt in range(4):
+            try:
+                arr = ee.data.computePixels({"expression": out, "fileFormat": "NUMPY_NDARRAY", "grid": req_grid})
+                break
+            except Exception as e:
+                if attempt == 3:
+                    raise
+                print("  retry", d, str(e)[:120], flush=True)
         v = arr["VVf"].astype("float32")
         a = arr["angle"].astype("float32")
         v[v <= -9998] = np.nan
         a[a <= -9998] = np.nan
-        arrays.append(v)
-        angles.append(a)
-        meta.append({"date": d, "products": by_date[d]})
-        print("  GEE", d, [x["id"] for x in by_date[d]], "valid frac %.3f" % np.isfinite(v).mean())
+        return v, a
+
+    from concurrent.futures import ThreadPoolExecutor
+    with ThreadPoolExecutor(4) as ex:
+        res = list(ex.map(one_day, dates))
+    arrays = [r[0] for r in res]
+    angles = [r[1] for r in res]
+    meta = []
+    for d, v, a in zip(dates, arrays, angles):
+        meta.append({"date": d, "products": by_date[d],
+                     "angle_min": float(np.nanmin(a)) if np.isfinite(a).any() else None,
+                     "angle_max": float(np.nanmax(a)) if np.isfinite(a).any() else None})
+        print("  GEE", d, [x["id"] for x in by_date[d]], "valid frac %.3f" % np.isfinite(v).mean(), flush=True)
     return np.stack(arrays), np.stack(angles), meta
 
 
