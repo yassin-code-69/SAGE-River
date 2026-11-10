@@ -1,5 +1,5 @@
 # Final audit
-run: 2026-11-11T04:21:01  source: gee
+run: 2026-11-11T04:26:05  source: gee
 
 - PASS — exists: outputs/tables/sentinel1_scene_inventory.csv
 - PASS — exists: outputs/tables/sentinel1_acquisitions.csv

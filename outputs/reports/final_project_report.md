@@ -51,7 +51,7 @@ Updated 11 Nov 2026 ~04:20 BST (supersedes the 02:15 version). Event: IEEE BUBT 
     - Rebuilt from the GEE results with v2 (section 10 table read from `v2_preregistered_criteria.csv`).
     - The v1/PC version is archived in `poster/archive_v1_pc/`.
 11. **Presentation.** Pitches (EN/BN), judges' Q&A (general and results, including v2 and the root cause), figure explanations, team roles.
-12. **Final audit.** `outputs/reports/final_audit.md` (`--source gee`) shows 66 PASS and 0 FAIL. It now also checks:
+12. **Final audit.** `outputs/reports/final_audit.md` (`--source gee`) shows 64 PASS and 0 FAIL. It now also checks:
     - the v2 frozen-file checksums;
     - that the Sirajganj SAR was created after the code freeze;
     - recomputation of the criteria flags.
